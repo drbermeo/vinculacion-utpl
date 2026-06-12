@@ -1,0 +1,5866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Credenciales - UTPL</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-2xl w-full border border-gray-100">
+        
+        <div class="text-center mb-8">
+            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Proyecto de Vinculación</span>
+            <h1 class="text-2xl font-bold text-gray-800 mt-3">Innovación Digital y Empresarial para el Crecimiento de Emprendedores</h1>
+            <p class="text-gray-500 mt-2 text-sm">Ingrese su número de cédula para consultar sus credenciales de acceso al programa.</p>
+        </div>
+
+        <div class="space-y-4 mb-8">
+            <div class="flex flex-col sm:flex-row gap-3">
+                <input type="text" id="cedulaInput" placeholder="Ej: 1105XXXXXX" 
+                       class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg text-center font-semibold tracking-wider">
+                <button onclick="buscarCredenciales()" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-blue-200 cursor-pointer">
+                    <i class="fas fa-search"></i> Consultar
+                </button>
+            </div>
+            <div id="errorMsg" class="hidden text-red-600 bg-red-50 p-3 rounded-lg text-sm text-center font-medium border border-red-100"></div>
+        </div>
+
+        <div id="resultadoSeccion" class="hidden space-y-6 border-t border-gray-100 pt-6">
+            
+            <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                <p class="text-xs text-blue-600 font-bold uppercase tracking-wider">Estimado/a:</p>
+                <h2 id="studentName" class="text-xl font-bold text-gray-800 mt-1"></h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 p-5 rounded-xl border border-gray-200">
+                <div>
+                    <span class="text-xs font-bold text-gray-400 uppercase">👑 Usuario Plataforma:</span>
+                    <p id="studentUser" class="text-lg font-mono font-bold text-blue-700 mt-1"></p>
+                </div>
+                <div>
+                    <span class="text-xs font-bold text-gray-400 uppercase">🔑 Contraseña de Acceso:</span>
+                    <p id="studentPass" class="text-lg font-mono font-bold text-blue-700 mt-1"></p>
+                </div>
+            </div>
+
+            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-xl space-y-4 text-gray-700 text-sm leading-relaxed">
+                <p class="font-semibold text-emerald-800 text-base">¡Le damos la bienvenida al programa de vinculación!</p>
+                <p>En la plataforma asignada podrá revisar los materiales didácticos, acceder a cada una de las clases virtuales y entregar las tareas necesarias para aprobar el programa con éxito.</p>
+                
+                <div class="space-y-4 pt-2">
+                    <p>📌 <strong>Enlace Zoom para las clases:</strong><br>
+                    <a href="https://utpl.zoom.us/j/83842930592" target="_blank" class="text-blue-600 hover:underline font-semibold break-all">https://utpl.zoom.us/j/83842930592</a></p>
+                    
+                    <p>📌 <strong>Plataforma de Formación Permanente UTPL:</strong><br>
+                    <a href="https://cursos-ec.utpl.edu.ec/course/view.php?id=365" target="_blank" class="text-blue-600 hover:underline font-semibold break-all">https://cursos-ec.utpl.edu.ec/course/view.php?id=365</a></p>
+                    
+                    <p>🕗 <strong>Horario de los talleres:</strong><br>
+                    Todos los talleres se desarrollarán de <strong>08h00 a 12h00</strong>, en hora de Ecuador.</p>
+                </div>
+
+                <details class="bg-white p-3 rounded-lg border border-emerald-100 cursor-pointer group">
+                    <summary class="font-semibold text-emerald-700 flex justify-between items-center list-none">
+                        <span>📅 Ver Fechas de los Talleres (Junio - Agosto)</span>
+                        <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                    </summary>
+                    <ul class="mt-3 space-y-2 text-xs text-gray-600 pl-2 list-disc list-inside border-t border-gray-100 pt-2">
+                        <li><strong>Sábado 13 de junio de 2026:</strong> Taller 1: Entornos digitales para negocios</li>
+                        <li><strong>Sábado 20 de junio de 2026:</strong> Taller 2: Cómo proteger mi información</li>
+                        <li><strong>Sábado 27 de junio de 2026:</strong> Taller 3: Marketing digital</li>
+                        <li><strong>Sábado 4 de julio de 2026:</strong> Nivelación Fase 1</li>
+                        <li><strong>Sábado 11 de julio de 2026:</strong> Taller 4: Redes sociales como estrategia de venta</li>
+                        <li><strong>Sábado 18 de julio de 2026:</strong> Taller 5: Estrategias de ventas y negociación</li>
+                        <li><strong>Sábado 25 de julio de 2026:</strong> Taller 6: Contabilidad y Tributación</li>
+                        <li><strong>Sábado 1 de agosto de 2026:</strong> Nivelación Fase 2 y fin de actividades</li>
+                    </ul>
+                </details>
+
+                <p class="text-xs text-gray-500 pt-2 border-t border-emerald-100">💻 <em>Nota: Le recomendamos ingresar a Zoom con unos minutos de anticipación y conectarse de ser posible desde un computador para facilitar el desarrollo de las prácticas dinámicas.</em></p>
+            </div>
+
+            <div class="text-center text-xs text-gray-400 pt-2">
+                <p class="font-semibold">Equipo del Proyecto de Vinculación</p>
+                <p>Universidad Técnica Particular de Loja (UTPL)</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 💾 AQUÍ PEGAS EL TEXTO COMPLETO QUE EXPORTASTE DESDE EL CONVERTIDOR DE EXCEL A JSON
+        const dataExcel = [
+  {
+    "nombres": "Pinedo  Licialan ",
+    "whatsapp": "51961961466",
+    "Correo": "licialanpinedo@gmail.com",
+    "username": "lpinedo",
+    "password": "b1gWyl1MyD",
+    "cedula": "00125193"
+  },
+  {
+    "nombres": "Cáceres Torre Edith Glenda",
+    "whatsapp": "51990044951",
+    "Correo": "egcacereslt@gmail.com",
+    "username": "egcaceres",
+    "password": "EG00463773",
+    "cedula": "00463773"
+  },
+  {
+    "nombres": "Arevalo Castro Yesenia Esbelia",
+    "whatsapp": "51945408444",
+    "Correo": "yesi_ac@hotmail.es",
+    "username": "yearevalo",
+    "password": "YE00790193",
+    "cedula": "00790193"
+  },
+  {
+    "nombres": "Palza Vega Rosa Carmen",
+    "whatsapp": "51982415479",
+    "Correo": "jivana2106@gmail.com",
+    "username": "rcpalza",
+    "password": "RC00793508",
+    "cedula": "00793508"
+  },
+  {
+    "nombres": "Delgado Santos Segundo Francisco",
+    "whatsapp": "593988475685",
+    "Correo": "francode6@hotmail.com",
+    "username": "sfdelgado",
+    "password": "SF0100758168",
+    "cedula": "0100758168"
+  },
+  {
+    "nombres": "Hidalgo Trujillo Tania Isabel",
+    "whatsapp": "593979842529",
+    "Correo": "taniahidalgo463@gmail.com",
+    "username": "tihidalgo1",
+    "password": "TI0102057767",
+    "cedula": "0102057767"
+  },
+  {
+    "nombres": "Peralta  Eulalia ",
+    "whatsapp": "593993668121",
+    "Correo": "laly70peralta@gmail.com",
+    "username": "eperalta",
+    "password": "E0102270154",
+    "cedula": "0102270154"
+  },
+  {
+    "nombres": "Cumbe Guanuquiza Ana Pilar",
+    "whatsapp": "593993255297",
+    "Correo": "pilicumbe27@gmail.com",
+    "username": "apcumbe",
+    "password": "AP0102324050",
+    "cedula": "0102324050"
+  },
+  {
+    "nombres": "Zhinin Vera Diana Giomara",
+    "whatsapp": "593980790283",
+    "Correo": "diana_zhinin@hotmail.com",
+    "username": "dgzhinin",
+    "password": "DG0102578564",
+    "cedula": "0102578564"
+  },
+  {
+    "nombres": "Zeas Guzhñay Piedad Rocío",
+    "whatsapp": "593995557471",
+    "Correo": "pierocioz@hotmail.com",
+    "username": "przeas",
+    "password": "PR0102781424",
+    "cedula": "0102781424"
+  },
+  {
+    "nombres": "Pulla Guamán Ruth Fabiola",
+    "whatsapp": "593997837991",
+    "Correo": "fabipug@gmail.com",
+    "username": "rfpulla",
+    "password": "RF0103219192",
+    "cedula": "0103219192"
+  },
+  {
+    "nombres": "Granda  Piedad ",
+    "whatsapp": "593979973251",
+    "Correo": "piedadgranda09888@gmail.com",
+    "username": "pgranda",
+    "password": "P0103597878",
+    "cedula": "0103597878"
+  },
+  {
+    "nombres": "Silva Cárdenas Sara Bernarda",
+    "whatsapp": "593988309615",
+    "Correo": "sarasilva4life@gmail.com",
+    "username": "sbsilva",
+    "password": "SB0103616033",
+    "cedula": "0103616033"
+  },
+  {
+    "nombres": "Constantine Zambrano María Esther",
+    "whatsapp": "593999000205",
+    "Correo": "mariaecz79@gmail.com",
+    "username": "meconstantine",
+    "password": "ME0103794749",
+    "cedula": "0103794749"
+  },
+  {
+    "nombres": "Montalvo Vázquez Norma Karina",
+    "whatsapp": "593993834594",
+    "Correo": "nkmv@hotmail.com",
+    "username": "nkmontalvo",
+    "password": "NK0103985289",
+    "cedula": "0103985289"
+  },
+  {
+    "nombres": "Fernandez Guaman Sonia Bernarda",
+    "whatsapp": "593989648684",
+    "Correo": "bernardacriollo@gmail.com",
+    "username": "sbfernandez1",
+    "password": "SB0104162003",
+    "cedula": "0104162003"
+  },
+  {
+    "nombres": "María Rosario María Rosario",
+    "whatsapp": "593981232382",
+    "Correo": "maria799espinoza@gmail.com",
+    "username": "mrmaria",
+    "password": "MR0104194782",
+    "cedula": "0104194782"
+  },
+  {
+    "nombres": "Castro Urdiales Guadalupe Jesús",
+    "whatsapp": "593995381496",
+    "Correo": "guadacastro1079@hotmail.com",
+    "username": "gjcastro",
+    "password": "GJ0104407291",
+    "cedula": "0104407291"
+  },
+  {
+    "nombres": "Pesantez Contreras Karina Isabel",
+    "whatsapp": "593987861753",
+    "Correo": "karinapesantezc@hotmail.com",
+    "username": "kipesantez",
+    "password": "KI0104449202",
+    "cedula": "0104449202"
+  },
+  {
+    "nombres": "Alvarez Ordoñez Johanna Gabriela",
+    "whatsapp": "593994902173",
+    "Correo": "jgalvarezo47@gmail.com",
+    "username": "jgalvarez",
+    "password": "JG0105184147",
+    "cedula": "0105184147"
+  },
+  {
+    "nombres": "Sumba Nivelo Blanca Marithza",
+    "whatsapp": "593982885382",
+    "Correo": "nivelomary550@gmail.com",
+    "username": "bmsumba",
+    "password": "BM0105310833",
+    "cedula": "0105310833"
+  },
+  {
+    "nombres": "Arias Rivas Erika Andrea",
+    "whatsapp": "593983117195",
+    "Correo": "erika.arias127@gmail.com",
+    "username": "eaarias",
+    "password": "EA0105643258",
+    "cedula": "0105643258"
+  },
+  {
+    "nombres": "Hidalgo Vanegas Silvia Karina",
+    "whatsapp": "593991611539",
+    "Correo": "silviahidalgo093@gmail.com",
+    "username": "skhidalgo",
+    "password": "SK0106551237",
+    "cedula": "0106551237 "
+  },
+  {
+    "nombres": "Muñoz Novoa María Gracia",
+    "whatsapp": "593983960691",
+    "Correo": "mgmnovoa001@gmail.com",
+    "username": "mgmunoz",
+    "password": "MG0106836026",
+    "cedula": "0106836026"
+  },
+  {
+    "nombres": "Granda Jiménez Joseline Salomé",
+    "whatsapp": "593980124883",
+    "Correo": "jossysalome@gmail.com",
+    "username": "jsgranda1",
+    "password": "JS0106938467",
+    "cedula": "0106938467"
+  },
+  {
+    "nombres": "Benenaula Duchi Daniela Karina",
+    "whatsapp": "34603317894",
+    "Correo": "danielabenenaulad@gmail.com",
+    "username": "dkbenenaula",
+    "password": "DK0107481798",
+    "cedula": "0107481798"
+  },
+  {
+    "nombres": "Criollo Chuqui Nayeli Nicole",
+    "whatsapp": "593991154359",
+    "Correo": "criollonayeli358@gmail.com",
+    "username": "nncriollo",
+    "password": "NN0107825218",
+    "cedula": "0107825218"
+  },
+  {
+    "nombres": "Borja Loja Belén Fernanda",
+    "whatsapp": "593983435227",
+    "Correo": "bfborja02@gmail.com",
+    "username": "bfborja",
+    "password": "BF0150228013",
+    "cedula": "0150228013"
+  },
+  {
+    "nombres": "Giron Castro Josue David",
+    "whatsapp": "593959848545",
+    "Correo": "david.gironcastro@gmail.com",
+    "username": "jdgiron",
+    "password": "JD0150804136",
+    "cedula": "0150804136"
+  },
+  {
+    "nombres": "Poma Peredes Gloria Herminia",
+    "whatsapp": "593983881954",
+    "Correo": "gloriapoma98@gmail.com",
+    "username": "ghpoma",
+    "password": "GH0201316809",
+    "cedula": "0201316809"
+  },
+  {
+    "nombres": "López Ramos Leyana Lucrecia",
+    "whatsapp": "593984290867",
+    "Correo": "leyanalo@yahoo.com",
+    "username": "lllopez1",
+    "password": "LL0201497583",
+    "cedula": "0201497583"
+  },
+  {
+    "nombres": "Monar Monar Mariana Judith",
+    "whatsapp": "593988664532",
+    "Correo": "marianamonar000@hotmail.com",
+    "username": "mjmonar",
+    "password": "MJ0201548716",
+    "cedula": "0201548716"
+  },
+  {
+    "nombres": "Poma Paredes Julio César",
+    "whatsapp": "593994062441",
+    "Correo": "ceymar80@gmail.com",
+    "username": "jcpoma",
+    "password": "JC0201679602",
+    "cedula": "0201679602"
+  },
+  {
+    "nombres": "Pilco Salazar Paola Valeria",
+    "whatsapp": "593969948740",
+    "Correo": "ppilco1@gmail.com",
+    "username": "pvpilco",
+    "password": "PV0201712205",
+    "cedula": "0201712205"
+  },
+  {
+    "nombres": "Llanos Saltos Maria Fernanda",
+    "whatsapp": "593983960356",
+    "Correo": "ferllanosaltos@gmail.com",
+    "username": "mfllanos",
+    "password": "MF0201766755",
+    "cedula": "0201766755"
+  },
+  {
+    "nombres": "Llanos Saltos Juan Arzuben",
+    "whatsapp": "593962587128",
+    "Correo": "juanitojacob89@gmail.com",
+    "username": "jallanos",
+    "password": "JA0202014841",
+    "cedula": "0202014841"
+  },
+  {
+    "nombres": "Curichumbi Alvarez Mercy Isabel",
+    "whatsapp": "593989664828",
+    "Correo": "mercycurichumbi@hotmail.com",
+    "username": "micurichumbi",
+    "password": "MI0202320602",
+    "cedula": "0202320602"
+  },
+  {
+    "nombres": "Pisfil Granda Marleny Milagros",
+    "whatsapp": "51969900920",
+    "Correo": "marlenypisfil135@gmail.com",
+    "username": "mmpisfil",
+    "password": "MM02657239",
+    "cedula": "02657239"
+  },
+  {
+    "nombres": "Mena Fernández Miryan Araceli",
+    "whatsapp": "51969618961",
+    "Correo": "maracelimenaf@gmail.com",
+    "username": "mamena1",
+    "password": "MA02782632",
+    "cedula": "02782632"
+  },
+  {
+    "nombres": "Gutiérrez Palacios Mirianht Beathríz",
+    "whatsapp": "51944980173",
+    "Correo": "mirianht@hotmail.com",
+    "username": "mbgutierrez1",
+    "password": "MB02812246",
+    "cedula": "02812246"
+  },
+  {
+    "nombres": "Pizzorno Calderón Yoysi Paoly",
+    "whatsapp": "51977740842",
+    "Correo": "ypizzorno@gmail.com",
+    "username": "yppizzorno",
+    "password": "YP02848326",
+    "cedula": "02848326"
+  },
+  {
+    "nombres": "Celleri Genovez Rocio Jesus",
+    "whatsapp": "593990536341",
+    "Correo": "chio09121@hotmail.com",
+    "username": "rjcelleri",
+    "password": "RJ0301129615",
+    "cedula": "0301129615"
+  },
+  {
+    "nombres": "Muñoz Arce María Augusta",
+    "whatsapp": "593998646742",
+    "Correo": "pucalucero.maugus@gmail.com",
+    "username": "mamunoz1",
+    "password": "MA0301168043",
+    "cedula": "0301168043"
+  },
+  {
+    "nombres": "Ortega Castillo Maria Jose",
+    "whatsapp": "593997751982",
+    "Correo": "mjoctvo@hotmail.com",
+    "username": "mjortega",
+    "password": "MJ0301589438",
+    "cedula": "0301589438"
+  },
+  {
+    "nombres": "Peralta Saldaña José Tomás",
+    "whatsapp": "593992994323",
+    "Correo": "centroterapeuticocolibries@gmail.com",
+    "username": "jtperalta1",
+    "password": "JT0301655106",
+    "cedula": "0301655106"
+  },
+  {
+    "nombres": "Buñay Yunga Manuelina ",
+    "whatsapp": "34659114372",
+    "Correo": "manuelinaby2@hotmail.com",
+    "username": "mbunay",
+    "password": "M0301700431",
+    "cedula": "0301700431"
+  },
+  {
+    "nombres": "Vasquez Calle Irene Jhuleb",
+    "whatsapp": "593995904925",
+    "Correo": "jhuleb1003@hotmail.com",
+    "username": "ijvasquez",
+    "password": "IJ0302169644",
+    "cedula": "0302169644"
+  },
+  {
+    "nombres": "Jimenes Siguencia Jennyfer ",
+    "whatsapp": "593987870326",
+    "Correo": "familiagutierresjimenes@gmail.com",
+    "username": "jjimenes",
+    "password": "J0350046058",
+    "cedula": "0350046058"
+  },
+  {
+    "nombres": "Oyola Orosco María Elena",
+    "whatsapp": "593989350736",
+    "Correo": "mari.nct8@gmail.com",
+    "username": "meoyola1",
+    "password": "ME0350209680",
+    "cedula": "0350209680"
+  },
+  {
+    "nombres": "Hernández Pozo Marco Vinicio",
+    "whatsapp": "593980658494",
+    "Correo": "marcoviniciohp1970@gmail.com",
+    "username": "mvhernandez",
+    "password": "MV0400925277",
+    "cedula": "0400925277"
+  },
+  {
+    "nombres": "Mejia Ibarra Esthela Noemi",
+    "whatsapp": "593995725893",
+    "Correo": "plcnoe5@gmail.com",
+    "username": "enmejia",
+    "password": "EN0400926473",
+    "cedula": "0400926473"
+  },
+  {
+    "nombres": "Villarreal Vizcaíno Nancy Adriana",
+    "whatsapp": "593995034747",
+    "Correo": "villarrealadriani81@gmail.com",
+    "username": "navillarreal1",
+    "password": "NA0401073929",
+    "cedula": "0401073929"
+  },
+  {
+    "nombres": "Bolaños Llorente Ulpiano Libardo",
+    "whatsapp": "593984030122",
+    "Correo": "ulibardo_bol76@hotmail.com",
+    "username": "lbolanos",
+    "password": "UL0401088091",
+    "cedula": "0401088091"
+  },
+  {
+    "nombres": "Sierra Morán Johana Cristina",
+    "whatsapp": "34657684104",
+    "Correo": "johanasierra@usal.es",
+    "username": "jcsierra",
+    "password": "JC0401175864",
+    "cedula": "0401175864"
+  },
+  {
+    "nombres": "Mavisoy Ayala Maribel Patricia",
+    "whatsapp": "593983706340",
+    "Correo": "marimavi27@gmail.com",
+    "username": "mpmavisoy",
+    "password": "MP0401374376",
+    "cedula": "0401374376"
+  },
+  {
+    "nombres": "Revelo Ponce Rolando Renan",
+    "whatsapp": "593987038042",
+    "Correo": "rolando_revelo@hotmail.com",
+    "username": "rrrevelo",
+    "password": "RR0401550231",
+    "cedula": "0401550231"
+  },
+  {
+    "nombres": "Narváez Pantoja Dayana Lisseth",
+    "whatsapp": "593990756183",
+    "Correo": "narvaezpantoja95@gmail.com",
+    "username": "dlnarvaez",
+    "password": "DL0401849096",
+    "cedula": "0401849096"
+  },
+  {
+    "nombres": "Cuaical C Diana L",
+    "whatsapp": "593990306863",
+    "Correo": "diana.lucia2907@gmail.com",
+    "username": "dlcuaical",
+    "password": "DL0401875315",
+    "cedula": "0401875315 "
+  },
+  {
+    "nombres": "Charfuelan Tulcan Greisy Tatiana",
+    "whatsapp": "593996887380",
+    "Correo": "tatiana.charfuelan@gmail.com",
+    "username": "gtcharfuelan",
+    "password": "GT0401943774",
+    "cedula": "0401943774"
+  },
+  {
+    "nombres": "Villota Mavisoy Cindhy Fernanda",
+    "whatsapp": "593992660541",
+    "Correo": "villotacindhy@gmail.com",
+    "username": "cfvillota",
+    "password": "CF0401993936",
+    "cedula": "0401993936"
+  },
+  {
+    "nombres": "Viteri Santamaría Mercedes Guadalupe",
+    "whatsapp": "593958843719",
+    "Correo": "guadame.viteri65@gmail.com",
+    "username": "mgviteri",
+    "password": "MG0501461008",
+    "cedula": "0501461008"
+  },
+  {
+    "nombres": "Gordillo Peña Maria Mercedes",
+    "whatsapp": "593998375670",
+    "Correo": "plenitud1969@gmail.com",
+    "username": "mmgordillo",
+    "password": "MM0501598155",
+    "cedula": "0501598155"
+  },
+  {
+    "nombres": "Madrid Calero Plinio ",
+    "whatsapp": "34613643996",
+    "Correo": "pavelmadrid@hotmail.es",
+    "username": "pmadrid1",
+    "password": "P0501602551",
+    "cedula": "0501602551"
+  },
+  {
+    "nombres": "Reinoso Sánchez Washington Alejandro",
+    "whatsapp": "593993392919",
+    "Correo": "alejandroreinoso4life@hotmail.com",
+    "username": "wareinoso1",
+    "password": "WA0501746721",
+    "cedula": "0501746721"
+  },
+  {
+    "nombres": "Sanchez  Iris ",
+    "whatsapp": "593999784027",
+    "Correo": "irissanchez4life@gmail.com",
+    "username": "ifsanchez",
+    "password": "IF0501748859",
+    "cedula": "0501748859"
+  },
+  {
+    "nombres": "Tonato Quinquiguano Gladys Lucia",
+    "whatsapp": "593987418968",
+    "Correo": "luciatonato02@gmail.com",
+    "username": "gltonato",
+    "password": "GL0502189491",
+    "cedula": "0502189491"
+  },
+  {
+    "nombres": "Ullco Alban Magda Janeth",
+    "whatsapp": "593978794769",
+    "Correo": "albanmagda900@gmail.com",
+    "username": "mjullco",
+    "password": "MJ0502617020",
+    "cedula": "0502617020"
+  },
+  {
+    "nombres": "Ronda Tayupanta Maria Teresa",
+    "whatsapp": "593987449402",
+    "Correo": "teresaronda164@gmail.com",
+    "username": "mtronda",
+    "password": "MT0502650765",
+    "cedula": "0502650765"
+  },
+  {
+    "nombres": "Villacis Medina Paulina Elizabeth",
+    "whatsapp": "593984447949",
+    "Correo": "paulyvillacis@yahoo.com",
+    "username": "pevillacis",
+    "password": "PE0502681471",
+    "cedula": "0502681471"
+  },
+  {
+    "nombres": "Sarabia Zapata Edison Fabian",
+    "whatsapp": "593991366072",
+    "Correo": "edisonsarabia60@gmail.com",
+    "username": "efsarabia",
+    "password": "EF0502867716",
+    "cedula": "0502867716"
+  },
+  {
+    "nombres": "Musuña Simaluisa Blanca Guadalupe",
+    "whatsapp": "593992222108",
+    "Correo": "0502889744b@gmail.com",
+    "username": "bgmusuna",
+    "password": "BG0502889744",
+    "cedula": "0502889744"
+  },
+  {
+    "nombres": "Jácome Guaman Deysi Vanessa",
+    "whatsapp": "593986873628",
+    "Correo": "deysiedw87@gmail.com",
+    "username": "dvjacome",
+    "password": "DV0502964653",
+    "cedula": "0502964653"
+  },
+  {
+    "nombres": "Pila Ninasunta Nancy Marisol",
+    "whatsapp": "593983670101",
+    "Correo": "marisolpila392@gmail.com",
+    "username": "nmpila",
+    "password": "NM0503005753",
+    "cedula": "0503005753"
+  },
+  {
+    "nombres": "Astudillo Cajamarca Nancy Patricia",
+    "whatsapp": "593963015140",
+    "Correo": "p.attya@hotmail.com",
+    "username": "npastudillo",
+    "password": "NP0503093346",
+    "cedula": "0503093346"
+  },
+  {
+    "nombres": "Guevara Capilla Angela Victoria",
+    "whatsapp": "593997863239",
+    "Correo": "evely2008gavilanez@gmail.com",
+    "username": "avguevara",
+    "password": "AV0503327595",
+    "cedula": "0503327595"
+  },
+  {
+    "nombres": "Reyes  Gabriela Estefanía",
+    "whatsapp": "593990751857",
+    "Correo": "gabytreyesj2021@gmail.com",
+    "username": "gereyes",
+    "password": "GE0503414062",
+    "cedula": "0503414062"
+  },
+  {
+    "nombres": "Martinez Yanez Victor Edmundo",
+    "whatsapp": "593992795019",
+    "Correo": "victormartinez200518@hotmail.com",
+    "username": "vemartinez",
+    "password": "VE0503473142",
+    "cedula": "0503473142"
+  },
+  {
+    "nombres": "Molina Araujo María José",
+    "whatsapp": "593987560798",
+    "Correo": "mariajose.moli123@gmail.com",
+    "username": "mjmolina1",
+    "password": "MJ0503494890",
+    "cedula": "0503494890"
+  },
+  {
+    "nombres": "Vinocunga Vinocunga Jenifer Estefania",
+    "whatsapp": "593984019550",
+    "Correo": "jeni.1996n9@hotmail.com",
+    "username": "jevinocunga",
+    "password": "JE0503698938",
+    "cedula": "0503698938"
+  },
+  {
+    "nombres": "Tonato Quinquiguano Juan Carlos",
+    "whatsapp": "593999231400",
+    "Correo": "juantonato74@gmail.com",
+    "username": "jctonato",
+    "password": "JC0504087636",
+    "cedula": "0504087636"
+  },
+  {
+    "nombres": "Galarza Tarco Ximena Elizabeth",
+    "whatsapp": "593983430090",
+    "Correo": "leitojhael12@gmail.com",
+    "username": "xegalarza",
+    "password": "XE0504239955",
+    "cedula": "0504239955"
+  },
+  {
+    "nombres": "Suntasig Ganchala Liliana Celena",
+    "whatsapp": "593968770078",
+    "Correo": "suntasigselena1@gmail.com",
+    "username": "lcsuntasig",
+    "password": "LC0550076863",
+    "cedula": "0550076863"
+  },
+  {
+    "nombres": "Artieda Bustos Marcia Adelaida",
+    "whatsapp": "593963959560",
+    "Correo": "adelaidaartieda16@gmail.com",
+    "username": "maartieda",
+    "password": "MA0550128334",
+    "cedula": "0550128334"
+  },
+  {
+    "nombres": "Zarria Garcia Beatriz Margarita",
+    "whatsapp": "51980029341",
+    "Correo": "inversioneszarriag@hotmail.com",
+    "username": "bmzarria",
+    "password": "BM06002168",
+    "cedula": "06002168"
+  },
+  {
+    "nombres": "Quishpe Robalino Sonia Marilú",
+    "whatsapp": "593960279680",
+    "Correo": "liapisis1807@gmail.com",
+    "username": "smquishpe",
+    "password": "SM0602344780",
+    "cedula": "0602344780"
+  },
+  {
+    "nombres": "Borja  Patricia ",
+    "whatsapp": "593995080342",
+    "Correo": "pborjasevilla@ymail.com",
+    "username": "pborja",
+    "password": "P0602563348",
+    "cedula": "0602563348"
+  },
+  {
+    "nombres": "Guilcapi Mosquera Patricia Lorena",
+    "whatsapp": "593969084086",
+    "Correo": "lorenaguilcapi@gmail.com",
+    "username": "plguilcapi",
+    "password": "PL0602667420",
+    "cedula": "0602667420"
+  },
+  {
+    "nombres": "Santacruz Bedoya Mariela Paulina",
+    "whatsapp": "593964120240",
+    "Correo": " paulinasantacruz79@gmail.com",
+    "username": "mpsantacruz",
+    "password": "MP0602871477",
+    "cedula": "0602871477"
+  },
+  {
+    "nombres": "Llangarí  Mayra Matilde",
+    "whatsapp": "593998991928",
+    "Correo": "may_mat5@hotmail.es",
+    "username": "mmllangari",
+    "password": "MM0602969024",
+    "cedula": "0602969024"
+  },
+  {
+    "nombres": "Gordillo Fiallo Julia Pahola",
+    "whatsapp": "593995876142",
+    "Correo": "j.p.gordillo@gmail.com",
+    "username": "jpgordillo",
+    "password": "JP0603129552",
+    "cedula": "0603129552"
+  },
+  {
+    "nombres": "Burbano Salas María Valeria",
+    "whatsapp": "593939757005",
+    "Correo": "vburbano77@gmail.com",
+    "username": "mvburbano",
+    "password": "MV0603143553",
+    "cedula": "0603143553"
+  },
+  {
+    "nombres": "Alomía Pánchez María Elena",
+    "whatsapp": "593996383481",
+    "Correo": "zukzuk001@gmail.com",
+    "username": "mealomia",
+    "password": "ME0603272519",
+    "cedula": "0603272519"
+  },
+  {
+    "nombres": "Guadalupe Cadena Fernanda Elisa",
+    "whatsapp": "593995330970",
+    "Correo": "fherg979@gmail.com",
+    "username": "feguadalupe",
+    "password": "FE0603377805",
+    "cedula": "0603377805"
+  },
+  {
+    "nombres": "Chavez Arias Martha Patricia",
+    "whatsapp": "593992058434",
+    "Correo": "patriciachavez0379@gmail.com",
+    "username": "mpchavez1",
+    "password": "MP0603464108",
+    "cedula": "0603464108"
+  },
+  {
+    "nombres": "Miranda Collaguazo Lucia Mercedes",
+    "whatsapp": "593982216409",
+    "Correo": "lumiranda_2006@yahoo.com",
+    "username": "lmmiranda",
+    "password": "LM0603559758",
+    "cedula": "0603559758"
+  },
+  {
+    "nombres": "Guadalupe Cadena Adriana Katherine",
+    "whatsapp": "593980583047",
+    "Correo": "bqfadriana.guadalupe@outlook.com",
+    "username": "akguadalupe",
+    "password": "AK0603785239",
+    "cedula": "0603785239"
+  },
+  {
+    "nombres": "Chauca Condo Deisy Janeth",
+    "whatsapp": "593991521700",
+    "Correo": "keisidivanti1511@hotmail.com",
+    "username": "djchauca",
+    "password": "DJ0603823329",
+    "cedula": "0603823329"
+  },
+  {
+    "nombres": "Chunata Yuqui Jessica Alexandra",
+    "whatsapp": "593978603458",
+    "Correo": "jessicachunata92@gmail.com",
+    "username": "jachunata",
+    "password": "JA0603830241",
+    "cedula": "0603830241"
+  },
+  {
+    "nombres": "Malan  Veronica ",
+    "whatsapp": "593979430925",
+    "Correo": "veronikaalexa@hotmail.com",
+    "username": "vmalan",
+    "password": "V0603948324",
+    "cedula": "0603948324 "
+  },
+  {
+    "nombres": "Obando Guilcapi Yadira Fernanda",
+    "whatsapp": "593979053413",
+    "Correo": "yadira.fernanda77@gmail.com",
+    "username": "yfobando",
+    "password": "YF0603962143",
+    "cedula": "0603962143 "
+  },
+  {
+    "nombres": "Auquilla Cabadiana Dolores Silvana",
+    "whatsapp": "593979418126",
+    "Correo": "silvi2_auquilla@yahoo.com",
+    "username": "dsauquilla1",
+    "password": "DS0604020784",
+    "cedula": "0604020784"
+  },
+  {
+    "nombres": "Damian  Mariela ",
+    "whatsapp": "593983450700",
+    "Correo": "marielitagt109@gmail.com",
+    "username": "mdamian",
+    "password": "M0604182527",
+    "cedula": "0604182527"
+  },
+  {
+    "nombres": "Colcha Criollo Gladys Lucia",
+    "whatsapp": "593991903020",
+    "Correo": "gladlucy.2525@gmail.com",
+    "username": "glcolcha",
+    "password": "GL0604273078",
+    "cedula": "0604273078"
+  },
+  {
+    "nombres": "Guevara Merino Joselyn Estefanía",
+    "whatsapp": "593995797854",
+    "Correo": "jossy.guevara_16@hotmail.com",
+    "username": "jeguevara3",
+    "password": "JE0604352120",
+    "cedula": "0604352120"
+  },
+  {
+    "nombres": "Moyolema Paguay Lilian Alexandra",
+    "whatsapp": "593983712196",
+    "Correo": "lilianmoyolema7@gmail.com",
+    "username": "lamoyolema",
+    "password": "LA0604411751",
+    "cedula": "0604411751"
+  },
+  {
+    "nombres": "Guapulema Arias Yesenia Thalia",
+    "whatsapp": "593986692657",
+    "Correo": "ariastalia9@gmail.com",
+    "username": "ytguapulema",
+    "password": "YT0604653568",
+    "cedula": "0604653568 "
+  },
+  {
+    "nombres": "Lata Illapa Cinthia Nicol",
+    "whatsapp": "593997175679",
+    "Correo": "cinthia.lata2001@hotmail.com",
+    "username": "cnlata",
+    "password": "CN0604929703",
+    "cedula": "0604929703"
+  },
+  {
+    "nombres": "Cargua  Pilataxi Jessica Briggete",
+    "whatsapp": "593985981008",
+    "Correo": "jcarguap@unemi.edu.ec",
+    "username": "jbcargua",
+    "password": "JB0605086776",
+    "cedula": "0605086776"
+  },
+  {
+    "nombres": "Galarza Zambrano Valeria Jazmin",
+    "whatsapp": "593998891062",
+    "Correo": "xavyvalezavala@gmail.com",
+    "username": "vjgalarza",
+    "password": "VJ0605294388",
+    "cedula": "0605294388"
+  },
+  {
+    "nombres": "Lluco Muyol Jennyfer Elizabeth",
+    "whatsapp": "593985170862",
+    "Correo": "jennyferlluco423@gmail.com",
+    "username": "jelluco",
+    "password": "JE0605382308",
+    "cedula": "0605382308"
+  },
+  {
+    "nombres": "Tello Vallejo Yaira Brigithe",
+    "whatsapp": "593987766804",
+    "Correo": "yairatello30@gmail.com",
+    "username": "ybtello",
+    "password": "YB0605793843",
+    "cedula": "0605793843"
+  },
+  {
+    "nombres": "Guaranga Quispe Cecilia Alexandra",
+    "whatsapp": "593959002880",
+    "Correo": "guarangacecilia@gmail.com",
+    "username": "caguaranga",
+    "password": "CA0605990886",
+    "cedula": "0605990886"
+  },
+  {
+    "nombres": "Montes Serpa Maria Gladys",
+    "whatsapp": "51947756621",
+    "Correo": "marygla07@gmail.com",
+    "username": "mgmontes",
+    "password": "MG06442172",
+    "cedula": "06442172"
+  },
+  {
+    "nombres": "Wong Suehiro Mary Carmen",
+    "whatsapp": "51998318238",
+    "Correo": "bmwongsue@gmail.com",
+    "username": "mcwong",
+    "password": "MC06656180",
+    "cedula": "06656180"
+  },
+  {
+    "nombres": "Raffo Mujica Itala Patricia",
+    "whatsapp": "51993801327",
+    "Correo": "iraffom@gmail.com",
+    "username": "ipraffo",
+    "password": "IP06663251",
+    "cedula": "06663251"
+  },
+  {
+    "nombres": "Briones Ponce Narcisa Magdalena",
+    "whatsapp": "593968257901",
+    "Correo": "natacha_bripon@yahoo.es",
+    "username": "nmbriones1",
+    "password": "NM0702042946",
+    "cedula": "0702042946"
+  },
+  {
+    "nombres": "Guarnizo Torres Freddy Gonzalo",
+    "whatsapp": "593987053490",
+    "Correo": "fguarnizotorres@gmail.com",
+    "username": "fgguarnizo1",
+    "password": "FG0702654146",
+    "cedula": "0702654146"
+  },
+  {
+    "nombres": "Rojas Suarez Elvira Sobeida",
+    "whatsapp": "593983498571",
+    "Correo": "elvirarojassuarez.1972@gmail.com",
+    "username": "essuarez",
+    "password": "ES0702778838",
+    "cedula": "0702778838"
+  },
+  {
+    "nombres": "Cevallos Gonzaga Letty Yuliza",
+    "whatsapp": "593994856647",
+    "Correo": "letty_yuli2002@yahoo.com",
+    "username": "lycevallos",
+    "password": "LY0703292565",
+    "cedula": "0703292565"
+  },
+  {
+    "nombres": "Álvarez Delgado Guelky Jackeline",
+    "whatsapp": "593980011684",
+    "Correo": "guelky@outlook.com",
+    "username": "gjalvarez",
+    "password": "GJ0703325415",
+    "cedula": "0703325415"
+  },
+  {
+    "nombres": "Merino Alvarez Jefferson Kleber",
+    "whatsapp": "593995773386",
+    "Correo": "ing.jeffersonmerino@gmail.com",
+    "username": "jkmerino",
+    "password": "JK0703381699",
+    "cedula": "0703381699"
+  },
+  {
+    "nombres": "Kerly Aguilar Kerly Norayda",
+    "whatsapp": "593985890971",
+    "Correo": "kerly1984@hotmail.com",
+    "username": "knkerly",
+    "password": "KN0703407197",
+    "cedula": "0703407197"
+  },
+  {
+    "nombres": "Aguilar Ordóñez Nury Nardy",
+    "whatsapp": "593985691202",
+    "Correo": "nury19822008@hotmail.com",
+    "username": "nnaguilar",
+    "password": "NN0703407205",
+    "cedula": "0703407205"
+  },
+  {
+    "nombres": "Enriquez Escobar Sandra Pahola",
+    "whatsapp": "593987465243",
+    "Correo": "paholaenriquez_83@outlook.es",
+    "username": "spenriquez2",
+    "password": "SP0703527903",
+    "cedula": "0703527903"
+  },
+  {
+    "nombres": "Estrella Amaya Andrea Cristina",
+    "whatsapp": "539996662807",
+    "Correo": "andreacristinaestrellaamaya@gmail.com",
+    "username": "acestrella",
+    "password": "AC0704262542",
+    "cedula": "0704262542 "
+  },
+  {
+    "nombres": "Vargas Cajamarca Madeleine Cecibel",
+    "whatsapp": "593983600811",
+    "Correo": "maddycv16@gmail.com",
+    "username": "mcvargas1",
+    "password": "MC0704273077",
+    "cedula": "0704273077"
+  },
+  {
+    "nombres": "Bermeo Vega Angely Gisella",
+    "whatsapp": "593996389730",
+    "Correo": "gisellanelsito@gmail.com",
+    "username": "agbermeo",
+    "password": "AG0704513902",
+    "cedula": "0704513902"
+  },
+  {
+    "nombres": "Gonzalez Montoya Verónica Alexandra",
+    "whatsapp": "593997259173",
+    "Correo": "veagonzalm18@gmail.com",
+    "username": "vagonzalez1",
+    "password": "VA0704787803",
+    "cedula": "0704787803"
+  },
+  {
+    "nombres": "Armijos Ramirez Vanesa Cisne",
+    "whatsapp": "593959087251",
+    "Correo": "avanessa_86@hotmail.com",
+    "username": "vcarmijos",
+    "password": "VC0704913813",
+    "cedula": "0704913813"
+  },
+  {
+    "nombres": "Ruiz  Verónica ",
+    "whatsapp": "593992302954",
+    "Correo": "ruizpinzonveronicaelizabeth@gmail.com",
+    "username": "vruiz",
+    "password": "V0705144004",
+    "cedula": "0705144004"
+  },
+  {
+    "nombres": "Gómez Palacios Andrea Elizabeth",
+    "whatsapp": "593985553902",
+    "Correo": "andreagp93@outlook.es",
+    "username": "aegomez1",
+    "password": "AE0705175693",
+    "cedula": "0705175693"
+  },
+  {
+    "nombres": "Bueno Zambrano Mariuxi Anabel",
+    "whatsapp": "593991638990",
+    "Correo": "mariu.36@outlook.com",
+    "username": "mabueno1",
+    "password": "MA0705324499",
+    "cedula": "0705324499"
+  },
+  {
+    "nombres": "Castro Ordóñez Evelyn Amanda",
+    "whatsapp": "593991988038",
+    "Correo": "evelyncastro.eve89@gmail.com",
+    "username": "eacastro1",
+    "password": "EA0705409373",
+    "cedula": "0705409373"
+  },
+  {
+    "nombres": "Muñoz Jaramillo Jenny Magaly",
+    "whatsapp": "593939994475",
+    "Correo": "magy_jy@hotmail.com",
+    "username": "jmmunoz2",
+    "password": "JM0705424976",
+    "cedula": "0705424976"
+  },
+  {
+    "nombres": "Zuriaga Paye Erick Javier",
+    "whatsapp": "593979291370",
+    "Correo": "zuriagaerick@gmail.com",
+    "username": "ejzuriaga",
+    "password": "EJ0705436608",
+    "cedula": "0705436608"
+  },
+  {
+    "nombres": "Vicente Ojeda Rosa Verónica",
+    "whatsapp": "539992045599",
+    "Correo": "veronicavecenteoj@gmail.com",
+    "username": "rvvicente",
+    "password": "RV0705935187",
+    "cedula": "0705935187"
+  },
+  {
+    "nombres": "Castro Ordóñez Paulette Isabel",
+    "whatsapp": "593967292079",
+    "Correo": "cpauletteisabel@gmail.com",
+    "username": "picastro",
+    "password": "PI0706082955",
+    "cedula": "0706082955"
+  },
+  {
+    "nombres": "Lozano Zozoranga Zoila Rosa",
+    "whatsapp": "593989589573",
+    "Correo": "lozanorosa911@gmail.com",
+    "username": "zrlozano",
+    "password": "ZR0706362100",
+    "cedula": "0706362100"
+  },
+  {
+    "nombres": "Granda Vivanco Dayana Carolina",
+    "whatsapp": "593982566708",
+    "Correo": "dayana.granda@azzorti.com",
+    "username": "dcgranda",
+    "password": "DC0706751419",
+    "cedula": "0706751419"
+  },
+  {
+    "nombres": "Solano Aldaz Diana Maritza",
+    "whatsapp": "593988340060",
+    "Correo": "maritza081993@gmail.com",
+    "username": "dmsolano1",
+    "password": "DM0706774817",
+    "cedula": "0706774817"
+  },
+  {
+    "nombres": "Shimabukuro  Silvia ",
+    "whatsapp": "51998705875",
+    "Correo": "silviashimabukuro@gmail.com",
+    "username": "sshimabukuro",
+    "password": "14EVWCeRTH",
+    "cedula": "07445387"
+  },
+  {
+    "nombres": "Correa Borbor Emily Mahilen",
+    "whatsapp": "593996290244",
+    "Correo": "emilianacbr14@gmail.com",
+    "username": "emcorrea",
+    "password": "EM0750517799",
+    "cedula": "0750517799"
+  },
+  {
+    "nombres": "Ortiz  Olivia ",
+    "whatsapp": "51995041850",
+    "Correo": "oliviaortizm2026@gmail.com",
+    "username": "oortiz1",
+    "password": "Hm7BorCNqs",
+    "cedula": "07626340"
+  },
+  {
+    "nombres": "Torres Escobar Miriam Raquel",
+    "whatsapp": "51953711358",
+    "Correo": "toesraquel@gmail.com",
+    "username": "mrtorres2",
+    "password": "MR07757434",
+    "cedula": "07757434"
+  },
+  {
+    "nombres": "Cárdenas Cárdenas Paola Maria",
+    "whatsapp": "51930759010",
+    "Correo": "pmariacarde506@gmail.com",
+    "username": "pmcardenas",
+    "password": "PM07867980",
+    "cedula": "07867980"
+  },
+  {
+    "nombres": "Meza UrdÃ€nigo Cruz Egti",
+    "whatsapp": "593997694834",
+    "Correo": "crucita_meza@hotmail.com",
+    "username": "cemeza1",
+    "password": "CE0800739351",
+    "cedula": "0800739351"
+  },
+  {
+    "nombres": "Torres Valencia Rosita Elizabeth",
+    "whatsapp": "593939824129",
+    "Correo": "roeltova41@yahoo.es",
+    "username": "retorres1",
+    "password": "RE0801259557",
+    "cedula": "0801259557"
+  },
+  {
+    "nombres": "Jacho Estupiñán Eliana ",
+    "whatsapp": "593991910085",
+    "Correo": "elianajacho@yahoo.com",
+    "username": "edjacho",
+    "password": "EJ0801622556",
+    "cedula": "0801622556"
+  },
+  {
+    "nombres": "Egas Murillo Ximena Alexandra",
+    "whatsapp": "593999783095",
+    "Correo": "ximena.egas@hotmail.com",
+    "username": "xaegas",
+    "password": "XA0801805060",
+    "cedula": "0801805060"
+  },
+  {
+    "nombres": "Intriago Paredes Richard Alexander",
+    "whatsapp": "593994492821",
+    "Correo": "richard_intriago@yahoo.es",
+    "username": "raintriago",
+    "password": "RA0802100560",
+    "cedula": "0802100560"
+  },
+  {
+    "nombres": "Goyes Ríos Carolina ",
+    "whatsapp": "593979684188",
+    "Correo": "mercedesgoyes790@gmail.com",
+    "username": "cgoyes",
+    "password": "C0802391896",
+    "cedula": "0802391896"
+  },
+  {
+    "nombres": "Velez  Julia ",
+    "whatsapp": "593980675133",
+    "Correo": "jvelez882013@gmail.com",
+    "username": "jvelez",
+    "password": "J0802582627",
+    "cedula": "0802582627"
+  },
+  {
+    "nombres": "Cuero  Ana ",
+    "whatsapp": "593968157337",
+    "Correo": "lourvany20251@outlook.com",
+    "username": "acuero",
+    "password": "A0802657924",
+    "cedula": "0802657924"
+  },
+  {
+    "nombres": "Giler Palomino Doris Jasmina",
+    "whatsapp": "593991904305",
+    "Correo": "doris22giler@gmail.com",
+    "username": "djgiler1",
+    "password": "DJ0802957324",
+    "cedula": "0802957324"
+  },
+  {
+    "nombres": "Armijos Porozo Henry Gabriel",
+    "whatsapp": "34624074694",
+    "Correo": "gabrielporozo70@gmail.com",
+    "username": "hgarmijos",
+    "password": "HG0802994806",
+    "cedula": "0802994806"
+  },
+  {
+    "nombres": "Ureta Guerrero Madeleyne Jamileth",
+    "whatsapp": "593999276526",
+    "Correo": "madeleyneuretaguerrero@gmail.com",
+    "username": "mjureta",
+    "password": "MJ0803666205",
+    "cedula": "0803666205"
+  },
+  {
+    "nombres": "Ureta Guerrero María Aracely",
+    "whatsapp": "593980375997",
+    "Correo": "mariauretag@gmail.com",
+    "username": "maureta",
+    "password": "MA0803668318",
+    "cedula": "0803668318"
+  },
+  {
+    "nombres": "Angulo Batioja Jaritza Viviana",
+    "whatsapp": "593983312604",
+    "Correo": "jaancuba@gmail.com",
+    "username": "jvangulo",
+    "password": "JV0803929025",
+    "cedula": "0803929025"
+  },
+  {
+    "nombres": "Anchundia Vives Maria Isabel",
+    "whatsapp": "593962560818",
+    "Correo": "isabelanchundia1991@gmail.com",
+    "username": "mianchundia",
+    "password": "MI0804326825",
+    "cedula": "0804326825"
+  },
+  {
+    "nombres": "Garcia Naranjo Cecilia ",
+    "whatsapp": "51993488565",
+    "Correo": "cgnaranjo13@gmail.com",
+    "username": "cgarcia",
+    "password": "cS0pagiqG1",
+    "cedula": "08248908"
+  },
+  {
+    "nombres": "Tello Garcia Debbie Nicole",
+    "whatsapp": "593988182993",
+    "Correo": "nikolitabebe@hotmail.com",
+    "username": "dntello",
+    "password": "DN0850023367",
+    "cedula": "0850023367 "
+  },
+  {
+    "nombres": "Pavia Diaz Ruth ",
+    "whatsapp": "51982546046",
+    "Correo": "ruthpaviajust64@gmail.com",
+    "username": "rpavia",
+    "password": "n9xnnSWeOs",
+    "cedula": "08579894"
+  },
+  {
+    "nombres": "Cárdenas Aguilar Silvia Milagros",
+    "whatsapp": "51999067833",
+    "Correo": "mcardenas777@gmail.com",
+    "username": "smcardenas2",
+    "password": "SM08671760",
+    "cedula": "08671760"
+  },
+  {
+    "nombres": "Alvarez Prieto Nancy Marlene",
+    "whatsapp": "593994309786",
+    "Correo": "nancy60ec@gmail.com",
+    "username": "nmalvarez1",
+    "password": "NM0907388912",
+    "cedula": "0907388912"
+  },
+  {
+    "nombres": "Borbor Flores Ana María",
+    "whatsapp": "593989024343",
+    "Correo": "anaborbor1963@gmail.com",
+    "username": "amborbor",
+    "password": "AM0908059934",
+    "cedula": "0908059934"
+  },
+  {
+    "nombres": "Alcivar  Piedad ",
+    "whatsapp": "593963283226",
+    "Correo": "Paae242122@gmail.com",
+    "username": "palcivar",
+    "password": "P0910136423",
+    "cedula": "0910136423"
+  },
+  {
+    "nombres": "Araujo Vega Elixandra Marivel",
+    "whatsapp": "593959255752",
+    "Correo": "mary_1918@live.com",
+    "username": "emaraujo",
+    "password": "EM0910956507",
+    "cedula": "0910956507"
+  },
+  {
+    "nombres": "González Ampuero Fabrizio ",
+    "whatsapp": "593993388212",
+    "Correo": "drfabriziogonzalez@gmail.com",
+    "username": "fgonzalez",
+    "password": "F0910991488",
+    "cedula": "0910991488"
+  },
+  {
+    "nombres": "Piedra Coello Evelyn Lourdes",
+    "whatsapp": "593980532976",
+    "Correo": "evastone20@hotmail.com",
+    "username": "elpiedra",
+    "password": "EL0912829926",
+    "cedula": "0912829926"
+  },
+  {
+    "nombres": "Romero Gómez Ketty Inés",
+    "whatsapp": "593979850388",
+    "Correo": "kettyrogo@hotmail.com",
+    "username": "kiromero1",
+    "password": "KI0912929627",
+    "cedula": "0912929627"
+  },
+  {
+    "nombres": "Avilés Ochoa Cebero ",
+    "whatsapp": "593987338927",
+    "Correo": "cebeprimerosalud@gmail.com",
+    "username": "caviles",
+    "password": "C0913814869",
+    "cedula": "0913814869"
+  },
+  {
+    "nombres": "Pérez  Gladys ",
+    "whatsapp": "593959484137",
+    "Correo": "gladys_81072@hotmail.com",
+    "username": "gperez1",
+    "password": "G0914390737",
+    "cedula": "0914390737"
+  },
+  {
+    "nombres": "Monserrate Ubilla Gladys Rocio",
+    "whatsapp": "593967449072",
+    "Correo": "rociomonserrate_02@hotmail.com",
+    "username": "grmonserrate",
+    "password": "GR0914525811",
+    "cedula": "0914525811"
+  },
+  {
+    "nombres": "Arellano Alvarado Martha Cecilia",
+    "whatsapp": "593960858235",
+    "Correo": "arellanoalvarado53_@outlook.com",
+    "username": "mcarellano1",
+    "password": "MC0914810395",
+    "cedula": "0914810395"
+  },
+  {
+    "nombres": "Gallegos  Jessica ",
+    "whatsapp": "593960646098",
+    "Correo": "jkjess8@gmail.com",
+    "username": "jgallegos",
+    "password": "J0915604292",
+    "cedula": "0915604292"
+  },
+  {
+    "nombres": "Valencia Berrnita Angela Narcisa",
+    "whatsapp": "593959912098",
+    "Correo": "av446414@gmail.com",
+    "username": "anvalencia2",
+    "password": "AN0916022999",
+    "cedula": "0916022999"
+  },
+  {
+    "nombres": "Suárez Landa Luisa Gabriela",
+    "whatsapp": "593986263162",
+    "Correo": "gasula21@hotmail.com",
+    "username": "lgsuarez1",
+    "password": "LG0916426315",
+    "cedula": "0916426315"
+  },
+  {
+    "nombres": "Arriaga Torres Mayra ",
+    "whatsapp": "593994654920",
+    "Correo": "alidajuanes@gmail.com",
+    "username": "marriaga",
+    "password": "M0916536287",
+    "cedula": "0916536287"
+  },
+  {
+    "nombres": "Valencia  Paulina ",
+    "whatsapp": "593983425193",
+    "Correo": "ahinoapauleth@gmail.com",
+    "username": "pvalencia",
+    "password": "P0916891021",
+    "cedula": "0916891021"
+  },
+  {
+    "nombres": "Medina Cajas Jessica Liliana",
+    "whatsapp": "593987163668",
+    "Correo": "jeslimepu@hotmail.com",
+    "username": "jlmedina2",
+    "password": "JL0917216392",
+    "cedula": "0917216392"
+  },
+  {
+    "nombres": "Pincay Choez Elvira Jesenia",
+    "whatsapp": "593989908202",
+    "Correo": "jesenia-pincay@hotmail.com",
+    "username": "ejpincay1",
+    "password": "EJ0917398158",
+    "cedula": "0917398158"
+  },
+  {
+    "nombres": "Alvear Tomalá Yanina Bersabe",
+    "whatsapp": "593989640010",
+    "Correo": "ninaalvear77@gmail.com",
+    "username": "ybalvear",
+    "password": "YB0917435018",
+    "cedula": "0917435018 "
+  },
+  {
+    "nombres": "Zambrano Aray Gloria Alexandra",
+    "whatsapp": "593984754203",
+    "Correo": "alexa.zambrano2405@gmail.com",
+    "username": "gazambrano3",
+    "password": "GA0917449258",
+    "cedula": "0917449258"
+  },
+  {
+    "nombres": "Vera  Consuelo ",
+    "whatsapp": "593986340631",
+    "Correo": "consuelovera.briones@gmail.com",
+    "username": "cvera1",
+    "password": "C0917612509",
+    "cedula": "0917612509"
+  },
+  {
+    "nombres": "Jácome Delgado Marjorie ",
+    "whatsapp": "593995948393",
+    "Correo": "mayiya_eliza@hotmail.com",
+    "username": "mjacome",
+    "password": "M0918031121",
+    "cedula": "0918031121 "
+  },
+  {
+    "nombres": "Villamar  Añazco Selmira Viviana",
+    "whatsapp": "593981160900",
+    "Correo": "villamarviviana08@gmail.com",
+    "username": "svvillamar",
+    "password": "SV0918426479",
+    "cedula": "0918426479"
+  },
+  {
+    "nombres": "Quinde Flores Griselda Janina",
+    "whatsapp": "593986465580",
+    "Correo": "janinaquinde2@gmail.com",
+    "username": "gjquinde",
+    "password": "GJ0918807090",
+    "cedula": "0918807090"
+  },
+  {
+    "nombres": "Bonilla Rios Daniel ",
+    "whatsapp": "593968150825",
+    "Correo": "danielbonillarios@gmail.com",
+    "username": "dbonilla",
+    "password": "D0919011650",
+    "cedula": "0919011650"
+  },
+  {
+    "nombres": "Bravo Montoya Sandra Rocío",
+    "whatsapp": "593981605645",
+    "Correo": "chikiroci1979@gmail.com",
+    "username": "srbravo1",
+    "password": "SR0919848143",
+    "cedula": "0919848143"
+  },
+  {
+    "nombres": "Castro Apolo Paulina ",
+    "whatsapp": "593981178221",
+    "Correo": "paulinacastro439@gmail.com",
+    "username": "pcastro",
+    "password": "P0920287455",
+    "cedula": "0920287455"
+  },
+  {
+    "nombres": "Zambrano  Emma ",
+    "whatsapp": "593997560435",
+    "Correo": "emma.zambrano@hotmail.com",
+    "username": "ezambrano",
+    "password": "E0920320850",
+    "cedula": "0920320850"
+  },
+  {
+    "nombres": "Cagua Calvo  gueda Argentina",
+    "whatsapp": "-990169481",
+    "Correo": "argentinacagua@gmail.com",
+    "username": "gacagua",
+    "password": "GA0920371218",
+    "cedula": "0920371218"
+  },
+  {
+    "nombres": "Haro Mejillon María Fernanda",
+    "whatsapp": "593985341553",
+    "Correo": "fernandaharom@gmail.com",
+    "username": "mfharo",
+    "password": "MF0920719820",
+    "cedula": "0920719820"
+  },
+  {
+    "nombres": "Castillo Carrion Julissa ",
+    "whatsapp": "34672557651",
+    "Correo": "vjjulyssa@hotmail.com",
+    "username": "jcastillo",
+    "password": "J0921128625",
+    "cedula": "0921128625"
+  },
+  {
+    "nombres": "Rivadeneira Orellana Diana Alexandra",
+    "whatsapp": "593984330596",
+    "Correo": "diana_rivadeneira_82@hotmail.com",
+    "username": "darivadeneira",
+    "password": "DA0921306726",
+    "cedula": "0921306726"
+  },
+  {
+    "nombres": "Garcia Lozada Jorge Emilio",
+    "whatsapp": "593995593038",
+    "Correo": "jorgechgarcia@hotmail.com",
+    "username": "jegarcia1",
+    "password": "JE0921367546",
+    "cedula": "0921367546"
+  },
+  {
+    "nombres": "Arteaga Alvarado Raquel Lorena",
+    "whatsapp": "593991851625",
+    "Correo": "lorena87arteaga.rlaa@gmail.com",
+    "username": "rlarteaga",
+    "password": "RL0921435210",
+    "cedula": "0921435210"
+  },
+  {
+    "nombres": "Bueno Caguas Carmen ",
+    "whatsapp": "593981426841",
+    "Correo": "cabucandy24@gmail.com",
+    "username": "cbueno",
+    "password": "C0921450417",
+    "cedula": "0921450417"
+  },
+  {
+    "nombres": "Anastacio Baidal Jenny Priscilla",
+    "whatsapp": "593997145779",
+    "Correo": "jennyanastacio08@gmail.com",
+    "username": "jpanastacio",
+    "password": "JP0921493045",
+    "cedula": "0921493045"
+  },
+  {
+    "nombres": "Arreaga Tomalá Teresita Jesús",
+    "whatsapp": "593967091238",
+    "Correo": "teresitaarreagat@gmail.com",
+    "username": "tdarreaga",
+    "password": "TJ0921669396",
+    "cedula": "0921669396"
+  },
+  {
+    "nombres": "Chilan Torres Martha ",
+    "whatsapp": "593984120924",
+    "Correo": "marthachilantorres@gmail.com",
+    "username": "mchilan",
+    "password": "M0922363684",
+    "cedula": "0922363684"
+  },
+  {
+    "nombres": "Guzmán Vallejo Lissette Valentina",
+    "whatsapp": "593962553574",
+    "Correo": "valeguzva84@gmail.com",
+    "username": "lvguzman",
+    "password": "LV0922625140",
+    "cedula": "0922625140"
+  },
+  {
+    "nombres": "Chele Parrales Joana Paulina",
+    "whatsapp": "593967154868",
+    "Correo": "joanapaucp@gmail.com",
+    "username": "jpchele",
+    "password": "JP0923314702",
+    "cedula": "0923314702"
+  },
+  {
+    "nombres": "Castillo González J. Eduardo",
+    "whatsapp": "593993229715",
+    "Correo": "eduardo_el_caballero_de_sangre_azul@hotmail.com",
+    "username": "jecastillo3",
+    "password": "JE0923764385",
+    "cedula": "0923764385"
+  },
+  {
+    "nombres": "Campuzano Magallanes Eddy Alexander",
+    "whatsapp": "569953604911",
+    "Correo": "lexcampuzano@hotmail.es",
+    "username": "eacampuzano",
+    "password": "EA0923943922",
+    "cedula": "0923943922"
+  },
+  {
+    "nombres": "Chaglia Palacios Katerine Verónica",
+    "whatsapp": "593992442271",
+    "Correo": "kattypalacios0111@gmail.com",
+    "username": "kvchaglia",
+    "password": "KV0923949804",
+    "cedula": "0923949804"
+  },
+  {
+    "nombres": "Aldaz Carpio Angelica ",
+    "whatsapp": "593983343739",
+    "Correo": "angelica97290@gmail.com",
+    "username": "aaldaz",
+    "password": "A0923967079",
+    "cedula": "0923967079"
+  },
+  {
+    "nombres": "Santos Escalante Karen Sugey",
+    "whatsapp": "593978622201",
+    "Correo": "karen.chinity@gmail.com",
+    "username": "kssantos",
+    "password": "KS0924021959",
+    "cedula": "0924021959"
+  },
+  {
+    "nombres": "Chiquito Soledispa Diana Carolina",
+    "whatsapp": "593985924931",
+    "Correo": "karito-26dc@live.com",
+    "username": "dcchiquito",
+    "password": "DC0924098395",
+    "cedula": "0924098395"
+  },
+  {
+    "nombres": "Poveda Rodríguez Dalia Margarita",
+    "whatsapp": "593961110236",
+    "Correo": "nathalylino300@gmail.com",
+    "username": "dmpoveda",
+    "password": "DM0924177777",
+    "cedula": "0924177777"
+  },
+  {
+    "nombres": "Noristz Armijos Karen Jazmín",
+    "whatsapp": "593991891888",
+    "Correo": "karennoristz706@hotmail.com",
+    "username": "kjnoristz",
+    "password": "KJ0924237753",
+    "cedula": "0924237753"
+  },
+  {
+    "nombres": "Vélez Meza Egti Karelyn",
+    "whatsapp": "593963260136",
+    "Correo": "elynvm96@outlook.es",
+    "username": "ekvelez1",
+    "password": "EK0924249899",
+    "cedula": "0924249899"
+  },
+  {
+    "nombres": "Bailon Pinto Felix Alfredo",
+    "whatsapp": "593979973842",
+    "Correo": "bailonfelix348@gmail.com",
+    "username": "fabailon",
+    "password": "FA0924546955",
+    "cedula": "0924546955"
+  },
+  {
+    "nombres": "Naranjo Choez Gisella Haydee",
+    "whatsapp": "593997030566",
+    "Correo": "g.naranjo87@outlook.com",
+    "username": "ghnaranjo",
+    "password": "GH0924971187",
+    "cedula": "0924971187"
+  },
+  {
+    "nombres": "Hernández Almeida Betsabeth Alejandra",
+    "whatsapp": "593983311835",
+    "Correo": "beth.hernandez2603@gmail.com",
+    "username": "bahernandez",
+    "password": "BA0924987977",
+    "cedula": "0924987977"
+  },
+  {
+    "nombres": "Calero Vera Jessica Kathiusca",
+    "whatsapp": "593994051715",
+    "Correo": "255ecu@lile-ec.com",
+    "username": "jkcalero",
+    "password": "JK0924991326",
+    "cedula": "0924991326"
+  },
+  {
+    "nombres": "Torres Romero Marianela Ernestina",
+    "whatsapp": "593958749704",
+    "Correo": "marianela_1985_tr@hotmail.com",
+    "username": "metorres3",
+    "password": "ME0925030462",
+    "cedula": "0925030462"
+  },
+  {
+    "nombres": "Lozano Arroyo Ana Betsy",
+    "whatsapp": "593985701113",
+    "Correo": "ana.b.lozano.a@gmail.com",
+    "username": "ablozano",
+    "password": "AB0925286916",
+    "cedula": "0925286916"
+  },
+  {
+    "nombres": "Llerena Gómez Verónica Alexandra",
+    "whatsapp": "593978853933",
+    "Correo": "llerena2285@gmail.com",
+    "username": "vallerena1",
+    "password": "VA0925352775",
+    "cedula": "0925352775"
+  },
+  {
+    "nombres": "Nieto Vila Diana Alexandra",
+    "whatsapp": "593969460752",
+    "Correo": "diananietov@hotmail.com",
+    "username": "danieto",
+    "password": "DA0925467656",
+    "cedula": "0925467656"
+  },
+  {
+    "nombres": "Piedra Espinoza Ana Belen",
+    "whatsapp": "593996535774",
+    "Correo": "abpiedrae@gmail.com",
+    "username": "abpiedra",
+    "password": "AB0926065806",
+    "cedula": "0926065806"
+  },
+  {
+    "nombres": "Navarrete Mora Yury Katiuska",
+    "whatsapp": "593990055902",
+    "Correo": "yury10trs@gmail.com",
+    "username": "yknavarrete",
+    "password": "YK0926159740",
+    "cedula": "0926159740"
+  },
+  {
+    "nombres": "Rico González Adriana Sophia",
+    "whatsapp": "593968948105",
+    "Correo": "adrigonzabay99@gmail.com",
+    "username": "asrico",
+    "password": "AS0926972662",
+    "cedula": "0926972662"
+  },
+  {
+    "nombres": "Cabezas  Carmen ",
+    "whatsapp": "593960460245",
+    "Correo": "mirandapris16@gmail.com",
+    "username": "ccabezas",
+    "password": "C0927372433",
+    "cedula": "0927372433 "
+  },
+  {
+    "nombres": "Guerrero Zambrano Mariela Monserrate",
+    "whatsapp": "593980116167",
+    "Correo": "meryg.zambrano@gmail.com",
+    "username": "mmguerrero2",
+    "password": "MM0927373829",
+    "cedula": "0927373829"
+  },
+  {
+    "nombres": "Bravo Matamoros Ariana Doménica",
+    "whatsapp": "32495848074",
+    "Correo": "Ariana.BravoMatamoros@ugent.be",
+    "username": "adbravo",
+    "password": "AD0927465104",
+    "cedula": "0927465104"
+  },
+  {
+    "nombres": "Moreira Valdiviezo Zolange ",
+    "whatsapp": "593997316176",
+    "Correo": "zolangemoreiravaldiviezo@gmail.com",
+    "username": "zmoreira",
+    "password": "Z0927600874",
+    "cedula": "0927600874"
+  },
+  {
+    "nombres": "López Pincay Andrea Estefanía",
+    "whatsapp": "593989885786",
+    "Correo": "andrius1925@gmail.com",
+    "username": "aelopez",
+    "password": "AE0927855049",
+    "cedula": "0927855049"
+  },
+  {
+    "nombres": "Garcia Ochoa Xiomara Garcia",
+    "whatsapp": "593986166036",
+    "Correo": "x.maragarcia26@gmail.com",
+    "username": "xggarcia",
+    "password": "XG0928001957",
+    "cedula": "0928001957"
+  },
+  {
+    "nombres": "Del Pezo Lilibeth ",
+    "whatsapp": "593961807147",
+    "Correo": "aquinolilibeth79@gmail.com",
+    "username": "ldel",
+    "password": "L0928272608",
+    "cedula": "0928272608"
+  },
+  {
+    "nombres": "Peñafiel Cedeño Ingrid Cecibel",
+    "whatsapp": "593986497852",
+    "Correo": "penafielingrid21@gmail.com",
+    "username": "icpenafiel",
+    "password": "IC0928496991",
+    "cedula": "0928496991"
+  },
+  {
+    "nombres": "Poveda Zamora Roxanna Dayli",
+    "whatsapp": "593986316864",
+    "Correo": "roxannapovedazamora@gmail.com",
+    "username": "rdpoveda",
+    "password": "RD0929093078",
+    "cedula": "0929093078"
+  },
+  {
+    "nombres": "Avilés Vera Erika Johanna",
+    "whatsapp": "593960215676",
+    "Correo": "erikaavilesv1992@gmail.com",
+    "username": "ejaviles",
+    "password": "EJ0929578243",
+    "cedula": "0929578243"
+  },
+  {
+    "nombres": "Barzola Medina Jessenia Stephaniea",
+    "whatsapp": "593982179609",
+    "Correo": "barzolamedinajessenia@gmail.com",
+    "username": "jsbarzola",
+    "password": "JS0929773869",
+    "cedula": "0929773869 "
+  },
+  {
+    "nombres": "Lozada Mora Lady Stefany",
+    "whatsapp": "593990831902",
+    "Correo": "lady2007ste@gmail.com",
+    "username": "lslozada",
+    "password": "LS0929896413",
+    "cedula": "0929896413"
+  },
+  {
+    "nombres": "Solis Cedeño Génesis Dolores",
+    "whatsapp": "593981556825",
+    "Correo": "genesissolis0@gmail.com",
+    "username": "gdsolis",
+    "password": "GD0930079520",
+    "cedula": "0930079520 "
+  },
+  {
+    "nombres": "Casquete Moreira Jazmín Antonieta",
+    "whatsapp": "593961020857",
+    "Correo": "jazmincasquete20@gmail.com",
+    "username": "jacasquete",
+    "password": "JA0930297585",
+    "cedula": "0930297585"
+  },
+  {
+    "nombres": "Ramírez Prieto Katherine Lisbeth",
+    "whatsapp": "593939046769",
+    "Correo": "katherin_ramirez_4@hotmail.com",
+    "username": "klramirez",
+    "password": "KL0930509823",
+    "cedula": "0930509823"
+  },
+  {
+    "nombres": "Villegas Lainez Joselyne Dayanara",
+    "whatsapp": "593939990073",
+    "Correo": "demidayanara1@hotmail.es",
+    "username": "jdvillegas",
+    "password": "JD0930817572",
+    "cedula": "0930817572"
+  },
+  {
+    "nombres": "Astudillo Sandoya Luis Arturo",
+    "whatsapp": "593979300876",
+    "Correo": "luis-astudillo29@hotmail.com",
+    "username": "laastudillo",
+    "password": "LA0930987680",
+    "cedula": "0930987680"
+  },
+  {
+    "nombres": "Lino Beltrán Denisse Vanessa",
+    "whatsapp": "593997858270",
+    "Correo": "dlino9060@gmail.com",
+    "username": "dvlino",
+    "password": "DV0940066467",
+    "cedula": "0940066467"
+  },
+  {
+    "nombres": "Alvarado Vargas Génesis Stefania",
+    "whatsapp": "593983820022",
+    "Correo": "genesisalvaradovargas@gmail.com",
+    "username": "gsalvarado1",
+    "password": "GS0940389984",
+    "cedula": "0940389984"
+  },
+  {
+    "nombres": "Barahona Altamirano Cindy Leidy",
+    "whatsapp": "593963159626",
+    "Correo": "c.barahonaa21@gmail.com",
+    "username": "clbarahona",
+    "password": "CL0941579161",
+    "cedula": "0941579161"
+  },
+  {
+    "nombres": "Mancheno Mera Katherine Nicole",
+    "whatsapp": "593995669146",
+    "Correo": "nicole.mancheno06@gmail.com",
+    "username": "knmancheno",
+    "password": "KN0942036070",
+    "cedula": "0942036070"
+  },
+  {
+    "nombres": "Plaza Correa Karely Yare",
+    "whatsapp": "593981017260",
+    "Correo": "anaceciliacorreavalverde@gmail.com",
+    "username": "kyplaza",
+    "password": "KY0942134123",
+    "cedula": "0942134123"
+  },
+  {
+    "nombres": "Caguana Avila Ginyer Viviana",
+    "whatsapp": "593989825999",
+    "Correo": "ginyercaguana@gmail.com",
+    "username": "gvcaguana",
+    "password": "GV0943135756",
+    "cedula": "0943135756 "
+  },
+  {
+    "nombres": "Caceres Cordova Carolina ",
+    "whatsapp": "51995066306",
+    "Correo": "carolinacc304@gmail.com",
+    "username": "ccaceres",
+    "password": "y0qKBxLril",
+    "cedula": "09438738"
+  },
+  {
+    "nombres": "Chonillo Benavides Elix Carmen",
+    "whatsapp": "593994098239",
+    "Correo": "elixchonillo142@gmail.com",
+    "username": "ecchonillo",
+    "password": "EC0944213727",
+    "cedula": "0944213727"
+  },
+  {
+    "nombres": "Narváez Rambay Shirel Abigail",
+    "whatsapp": "593983265294",
+    "Correo": "rambayshira@gmail.com",
+    "username": "sanarvaez1",
+    "password": "SA0950254136",
+    "cedula": "0950254136"
+  },
+  {
+    "nombres": "Cedeño Zambrano Cinthya Lissette",
+    "whatsapp": "593967700376",
+    "Correo": "cinthyacedeno0@gmail.com",
+    "username": "clcedeno1",
+    "password": "CL0950613869",
+    "cedula": "0950613869"
+  },
+  {
+    "nombres": "Condor Ronquillo Eliana Andreina",
+    "whatsapp": "593980318018",
+    "Correo": "elianacr20@gmail.com",
+    "username": "eacondor",
+    "password": "EA0951224641",
+    "cedula": "0951224641"
+  },
+  {
+    "nombres": "Maldonado  Jennifer ",
+    "whatsapp": "593993703473",
+    "Correo": "llapac54@gmail.com",
+    "username": "jmaldonado",
+    "password": "J0951267541",
+    "cedula": "0951267541"
+  },
+  {
+    "nombres": "Chinga Molina Katherine Adriana",
+    "whatsapp": "593958609778",
+    "Correo": "katherine_adriana@outlook.com",
+    "username": "kachinga",
+    "password": "KA0951527415",
+    "cedula": "0951527415"
+  },
+  {
+    "nombres": "Bazán Leon Cristina Cecilia",
+    "whatsapp": "593993925951",
+    "Correo": "cristybazanleon@hotmail.com",
+    "username": "ccbazan",
+    "password": "CC0952507952",
+    "cedula": "0952507952"
+  },
+  {
+    "nombres": "Barreto Asencio Adamaris Marisleysis",
+    "whatsapp": "593969874246",
+    "Correo": "adamarisbarreto2002@gmail.com",
+    "username": "ambarreto",
+    "password": "AM0952812535",
+    "cedula": "0952812535"
+  },
+  {
+    "nombres": "Chavez Berrocal Ruth ",
+    "whatsapp": "51995791121",
+    "Correo": "ruthchavez696@gmail.com",
+    "username": "rchavez",
+    "password": "4eJIUapy1A",
+    "cedula": "09535673"
+  },
+  {
+    "nombres": "Bonilla Rodríguez Jazmin Briggith",
+    "whatsapp": "593982995884",
+    "Correo": "bebyhannihta@gmail.com",
+    "username": "jbbonilla",
+    "password": "JB0953842481",
+    "cedula": "0953842481"
+  },
+  {
+    "nombres": "Medina Rico Leoncio Omar",
+    "whatsapp": "593980534317",
+    "Correo": "leonciomedina822@gmail.com",
+    "username": "lomedina",
+    "password": "LO0953906567",
+    "cedula": "0953906567"
+  },
+  {
+    "nombres": "Navarrete Rivera Stefanie Nashly",
+    "whatsapp": "593985023476",
+    "Correo": "fannyriveracastrillon2@gmail.com",
+    "username": "snnavarrete",
+    "password": "SN0955856380",
+    "cedula": "0955856380"
+  },
+  {
+    "nombres": "Parrales Briones Elvis Alexander",
+    "whatsapp": "593969864749",
+    "Correo": "elvisparrale7@gmail.com",
+    "username": "eaparrales1",
+    "password": "EA0956139315",
+    "cedula": "0956139315"
+  },
+  {
+    "nombres": "Lino Poveda Nathaly Samantha",
+    "whatsapp": "593978706605",
+    "Correo": "nathalylino6@gmail.com",
+    "username": "nslino",
+    "password": "NS0956251813",
+    "cedula": "0956251813"
+  },
+  {
+    "nombres": "Zavala Loor Cindy Lisbeth",
+    "whatsapp": "593968695710",
+    "Correo": "lisbethzav.l@gmail.com",
+    "username": "clzavala",
+    "password": "CL0957569643",
+    "cedula": "0957569643"
+  },
+  {
+    "nombres": "Vidal Delgado Edith Narcisa",
+    "whatsapp": "593968439514",
+    "Correo": "delgadotaylor333@gmail.com",
+    "username": "envidal",
+    "password": "EN0957666472",
+    "cedula": "0957666472"
+  },
+  {
+    "nombres": "Flores Meza Jonathan Luis",
+    "whatsapp": "593981705126",
+    "Correo": "jonathanfloresmeza63@gmail.com",
+    "username": "jlflores3",
+    "password": "JL0957996424",
+    "cedula": "0957996424"
+  },
+  {
+    "nombres": "Mosquera Quimiz Nathaly Denisse",
+    "whatsapp": "593959584619",
+    "Correo": "mosqueran996@gmail.com",
+    "username": "ndmosquera",
+    "password": "ND0958114431",
+    "cedula": "0958114431"
+  },
+  {
+    "nombres": "Bermeo Ruiz Miryan Bermeo",
+    "whatsapp": "593987300933",
+    "Correo": "belenbermeoruiz2002@gmail.com",
+    "username": "mbbermeo1",
+    "password": "MB0958360422",
+    "cedula": "0958360422"
+  },
+  {
+    "nombres": "Tapia Peñafiel Maria Belén",
+    "whatsapp": "593963267307",
+    "Correo": "belpenafiel605@gmail.com",
+    "username": "mbtapia1",
+    "password": "MB0958871741",
+    "cedula": "0958871741"
+  },
+  {
+    "nombres": "Villalobos Molina Liliana Marcela",
+    "whatsapp": "593999327381",
+    "Correo": "liliana.villalobos@azzorti.com",
+    "username": "lvvillalobos",
+    "password": "LM0960829489",
+    "cedula": "0960829489"
+  },
+  {
+    "nombres": "Palaco Challco Vicente ",
+    "whatsapp": "593995657245",
+    "Correo": "vicentepalaco1980@gmail.com",
+    "username": "vpalaco",
+    "password": "V0966737173",
+    "cedula": "0966737173"
+  },
+  {
+    "nombres": "Lindarte Lisboa Francis Camelia",
+    "whatsapp": "593966889743",
+    "Correo": "lindarte.2609@gmail.com",
+    "username": "fclindarte",
+    "password": "FC0966889743",
+    "cedula": "0966889743"
+  },
+  {
+    "nombres": "Vasquez Bastidas Ceyra Milagros",
+    "whatsapp": "593958947680",
+    "Correo": "ceyravasquez@gmail.com",
+    "username": "cmvasquez",
+    "password": "CM0966902165",
+    "cedula": "0966902165"
+  },
+  {
+    "nombres": "Alegre Montoya Mercedes Jenny",
+    "whatsapp": "51992750012",
+    "Correo": "jennya2409@gmail.com",
+    "username": "mjalegre",
+    "password": "MJ09804816",
+    "cedula": "09804816"
+  },
+  {
+    "nombres": "Mesia Vargas María Pilar",
+    "whatsapp": "51987492997",
+    "Correo": "mariamesia0723@gmail.com",
+    "username": "mpmesia",
+    "password": "MP09858577",
+    "cedula": "09858577"
+  },
+  {
+    "nombres": "Sánchez Quispe Karem Pilar",
+    "whatsapp": "51977929162",
+    "Correo": "kanfrasq@gmail.com",
+    "username": "kpsanchez2",
+    "password": "KP10000944",
+    "cedula": "10000944"
+  },
+  {
+    "nombres": "Gudiño Diaz Silvia Tatiana",
+    "whatsapp": "593988052883",
+    "Correo": "tatisnegrita19@gmail.com",
+    "username": "stgudino",
+    "password": "ST1001661337",
+    "cedula": "1001661337"
+  },
+  {
+    "nombres": "Tapia Méndez Omar Manuel",
+    "whatsapp": "593985215923",
+    "Correo": "omatapia22@gmail.com",
+    "username": "omtapia",
+    "password": "OM1001953429",
+    "cedula": "1001953429"
+  },
+  {
+    "nombres": "Torres Cevallos Fernanda Rocio",
+    "whatsapp": "593997769598",
+    "Correo": "fernandatcr01@gmail.com",
+    "username": "frtorres",
+    "password": "FR1002413076",
+    "cedula": "1002413076"
+  },
+  {
+    "nombres": "Gudiño Puga Ana Lucia",
+    "whatsapp": "593999580685",
+    "Correo": "anigud765@gmail.com",
+    "username": "algudino",
+    "password": "AL1002462347",
+    "cedula": "1002462347"
+  },
+  {
+    "nombres": "Gudiño Diaz Karla Verónica",
+    "whatsapp": "593993353755",
+    "Correo": "karlita_veronica1975@hotmail.com",
+    "username": "kvgudino",
+    "password": "KV1002478319",
+    "cedula": "1002478319"
+  },
+  {
+    "nombres": "Ruíz Maldonado Ana Lucia",
+    "whatsapp": "593981891192",
+    "Correo": "anna.ruiz.apgs@gmail.com",
+    "username": "alruiz1",
+    "password": "AL1002875522",
+    "cedula": "1002875522"
+  },
+  {
+    "nombres": "Garcia Yandun Martha Beatriz",
+    "whatsapp": "593987722074",
+    "Correo": "marelis_15@hotmail.com",
+    "username": "mbgarcia1",
+    "password": "MB1003293733",
+    "cedula": "1003293733"
+  },
+  {
+    "nombres": "Díaz Simbaña Sandra Lucia",
+    "whatsapp": "593979745270",
+    "Correo": "sandylu394@gmail.com",
+    "username": "sldiaz",
+    "password": "SL1003684915",
+    "cedula": "1003684915"
+  },
+  {
+    "nombres": "Padilla Páez Erika Lucia",
+    "whatsapp": "593982286206",
+    "Correo": "padillaerika830@gmail.com",
+    "username": "elpadilla",
+    "password": "EL1003840772",
+    "cedula": "1003840772"
+  },
+  {
+    "nombres": "Padilla Páez Betty Mariela",
+    "whatsapp": "593959802308",
+    "Correo": "bettypadilla002@gmail.com",
+    "username": "bmpadilla1",
+    "password": "BM1003925136",
+    "cedula": "1003925136"
+  },
+  {
+    "nombres": "Minda Espinoza Mónica Asucena",
+    "whatsapp": "593990570827",
+    "Correo": "mindamoni@gmail.com",
+    "username": "maminda",
+    "password": "MA1003953724",
+    "cedula": "1003953724"
+  },
+  {
+    "nombres": "Ortiz Vaca Norayma Samira",
+    "whatsapp": "593980036996",
+    "Correo": "samynegrita1991@gmail.com",
+    "username": "nsortiz",
+    "password": "NS1004368195",
+    "cedula": "1004368195"
+  },
+  {
+    "nombres": "Arana García Emérita Leonila",
+    "whatsapp": "51981670016",
+    "Correo": "emeritajust@gmail.com",
+    "username": "elarana",
+    "password": "EL10077736",
+    "cedula": "10077736"
+  },
+  {
+    "nombres": "Pardo Figueroa Inés Durand",
+    "whatsapp": "51943675170",
+    "Correo": "grupo_belen@yahoo.com",
+    "username": "impardo",
+    "password": "ID10222099",
+    "cedula": "10222099"
+  },
+  {
+    "nombres": "Elias Tello Maria Adriana",
+    "whatsapp": "51987414055",
+    "Correo": "defilippi@hotmail.com",
+    "username": "maelias",
+    "password": "MA10223274",
+    "cedula": "10223274"
+  },
+  {
+    "nombres": "Castrillon Peralta Paola Ariana",
+    "whatsapp": "51999915358",
+    "Correo": "paocastrillon@hotmail.com",
+    "username": "pacastrillon",
+    "password": "PA10629472",
+    "cedula": "10629472"
+  },
+  {
+    "nombres": "Chavez Palomino Dorotea Natividad",
+    "whatsapp": "51975242916",
+    "Correo": "nattysoan@gmail.com",
+    "username": "dnchavez",
+    "password": "DN10870586",
+    "cedula": "10870586"
+  },
+  {
+    "nombres": "Tambo Morocho Jose Luis",
+    "whatsapp": "593983601606",
+    "Correo": "jtambomorocho@gmail.com",
+    "username": "jltambo",
+    "password": "JL1101578290",
+    "cedula": "1101578290"
+  },
+  {
+    "nombres": "Garrido Hidalgo Cruz María",
+    "whatsapp": "593985143099",
+    "Correo": "cruzgarridohidalgo@gmail.com",
+    "username": "cmgarrido",
+    "password": "CM1102414651",
+    "cedula": "1102414651"
+  },
+  {
+    "nombres": "Cordova Paladinez Clara Nila",
+    "whatsapp": "593984630497",
+    "Correo": "claracordovap@hotmail.com",
+    "username": "cncordova",
+    "password": "CN1102488408",
+    "cedula": "1102488408"
+  },
+  {
+    "nombres": "Córdova Chamba Jacqueline Rocío",
+    "whatsapp": "593993191464",
+    "Correo": "jacquyc088@gmail.com",
+    "username": "jrcordova1",
+    "password": "JR1102563234",
+    "cedula": "1102563234"
+  },
+  {
+    "nombres": "Collaguazo  Amable Augusto",
+    "whatsapp": "593958882306",
+    "Correo": "serticorp8888@gmail.com",
+    "username": "acollaguazo",
+    "password": "AA1102645882",
+    "cedula": "1102645882"
+  },
+  {
+    "nombres": "Encalada Gallegos Sixto Gonzalo",
+    "whatsapp": "593988763791",
+    "Correo": "reyencalada@yahoo.com",
+    "username": "sgencalada",
+    "password": "SG1102783998",
+    "cedula": "1102783998"
+  },
+  {
+    "nombres": "Agila Gallegos Gladys Miranda",
+    "whatsapp": "593999971095",
+    "Correo": "gladisagila98@gmail.com",
+    "username": "gmagila1",
+    "password": "GM1102814967",
+    "cedula": "1102814967"
+  },
+  {
+    "nombres": "Poma Paccha Gonzalo Awki",
+    "whatsapp": "593979049500",
+    "Correo": "gabrielgonzalop@gmail.com",
+    "username": "gpoma",
+    "password": "GA1102902549",
+    "cedula": "1102902549"
+  },
+  {
+    "nombres": "Jiménez Tinitana Sonia Emerita",
+    "whatsapp": "593987997643",
+    "Correo": "emeritas012216@hotmail.com",
+    "username": "sejimenez",
+    "password": "SE1103286157",
+    "cedula": "1103286157"
+  },
+  {
+    "nombres": "Gualan  Maria ",
+    "whatsapp": "593989280953",
+    "Correo": "mgualan116@gmail.com",
+    "username": "mgualan",
+    "password": "M1103295968",
+    "cedula": "1103295968"
+  },
+  {
+    "nombres": "Ordóñez Robles Vicky ",
+    "whatsapp": "34608001308",
+    "Correo": "vickytoya1974@gmail.com",
+    "username": "vordonez",
+    "password": "V1103307979",
+    "cedula": "1103307979"
+  },
+  {
+    "nombres": "Giron Soto Henry Fabian",
+    "whatsapp": "593997166360",
+    "Correo": "henrygiron_19@hotmail.com",
+    "username": "hfgiron",
+    "password": "HF1103433114",
+    "cedula": "1103433114 "
+  },
+  {
+    "nombres": "Pogo Pogo Héctor Geovanny",
+    "whatsapp": "593982926916",
+    "Correo": "hectorpogo12@gmail.com",
+    "username": "hgpogo",
+    "password": "HG1103616759",
+    "cedula": "1103616759"
+  },
+  {
+    "nombres": "Pineda  Noemí ",
+    "whatsapp": "593990868224",
+    "Correo": "noemi.nikken21@gmail.com",
+    "username": "mnpineda",
+    "password": "NN1103690192",
+    "cedula": "1103690192"
+  },
+  {
+    "nombres": "Diaz Lojan Nixon Manuel",
+    "whatsapp": "593962642670",
+    "Correo": "nixdi100@gmail.com",
+    "username": "nmdiaz2",
+    "password": "NM1103744858",
+    "cedula": "1103744858"
+  },
+  {
+    "nombres": "García  Gladys Maritza",
+    "whatsapp": "593989700017",
+    "Correo": "vivi.garcia079@gmail.com",
+    "username": "gmgarcia4",
+    "password": "GM1103781553",
+    "cedula": "1103781553"
+  },
+  {
+    "nombres": "Fernandez Guaman Lilia Francisca",
+    "whatsapp": "593989215830",
+    "Correo": "lilifrans95@gmail.com",
+    "username": "lffernandez",
+    "password": "LF1104027675",
+    "cedula": "1104027675"
+  },
+  {
+    "nombres": "Bermeo  Diana ",
+    "whatsapp": "593959826917",
+    "Correo": "drbermeo@utpl.edu.ec",
+    "username": "drbermeo",
+    "password": "DR1104139579",
+    "cedula": "1104139579"
+  },
+  {
+    "nombres": "Armijos Pineda Dolores Maribel",
+    "whatsapp": "593985735198",
+    "Correo": "mado_2106@hotmail.com",
+    "username": "dmarmijos",
+    "password": "DM1104203532",
+    "cedula": "1104203532"
+  },
+  {
+    "nombres": "León Torres Katherine Paola",
+    "whatsapp": "593998038789",
+    "Correo": "kathy_19869@hotmail.com",
+    "username": "kpleon1",
+    "password": "KP1104306558",
+    "cedula": "1104306558 "
+  },
+  {
+    "nombres": "Torres  Esperanza ",
+    "whatsapp": "593985628483",
+    "Correo": "charitotorres1985@hotmail.com",
+    "username": "etorres1",
+    "password": "E1104356967",
+    "cedula": "1104356967"
+  },
+  {
+    "nombres": "Castro Hidalgo Gina Verónica",
+    "whatsapp": "593993751184",
+    "Correo": "nikacas30@gmail.com",
+    "username": "gvcastro1",
+    "password": "GV1104602006",
+    "cedula": "1104602006"
+  },
+  {
+    "nombres": "Velez Flores Maria Cisne",
+    "whatsapp": "593987767746",
+    "Correo": "cisnevel6@gmail.com",
+    "username": "mcvelez",
+    "password": "MC1104675374",
+    "cedula": "1104675374"
+  },
+  {
+    "nombres": "Quitama Guamán Gina Mileny",
+    "whatsapp": "593989509829",
+    "Correo": "gmquitama@gmail.com",
+    "username": "gmquitama",
+    "password": "GM1104730344",
+    "cedula": "1104730344"
+  },
+  {
+    "nombres": "Ramos Ramos Ana Belén",
+    "whatsapp": "593991619466",
+    "Correo": "belenramosramos97@gmail.com",
+    "username": "abramos",
+    "password": "AB1104731060",
+    "cedula": "1104731060"
+  },
+  {
+    "nombres": "Ortiz Castañeda Manuel Antonio",
+    "whatsapp": "593939656759",
+    "Correo": "mo6739616@gmail.com",
+    "username": "maortiz4",
+    "password": "MA1105133969",
+    "cedula": "1105133969"
+  },
+  {
+    "nombres": "Yaguachi Velasquez Nayely Esperanza",
+    "whatsapp": "593999984825",
+    "Correo": "yaguachinayelivelasquez@gmail.com",
+    "username": "neyaguachi",
+    "password": "NE1105318883",
+    "cedula": "1105318883"
+  },
+  {
+    "nombres": "Pineda Malla Flor Maria",
+    "whatsapp": "593984987988",
+    "Correo": "flormariapinedamalla@gmail.com",
+    "username": "fmpineda",
+    "password": "FM1105352106",
+    "cedula": "1105352106"
+  },
+  {
+    "nombres": "Guaman Medina Martha Patricia",
+    "whatsapp": "593994043269",
+    "Correo": "patys19922010@gmail.com",
+    "username": "mpguaman1",
+    "password": "MP1105353435",
+    "cedula": "1105353435"
+  },
+  {
+    "nombres": "Celi Cuenca Jakeline Ivania",
+    "whatsapp": "593962933327",
+    "Correo": "jackeline16celi@gmail.com",
+    "username": "jiceli1",
+    "password": "JI1105554990",
+    "cedula": "1105554990"
+  },
+  {
+    "nombres": "Sánchez Torres Doria Cristina",
+    "whatsapp": "593988080178",
+    "Correo": "dorita2018sanchez@gmail.com",
+    "username": "dcsanchez2",
+    "password": "DC1105599755",
+    "cedula": "1105599755"
+  },
+  {
+    "nombres": "Coronel  Jhuliana ",
+    "whatsapp": "593968773134",
+    "Correo": "jhulitagranda@gmail.com",
+    "username": "jcoronel",
+    "password": "J1105877607",
+    "cedula": "1105877607"
+  },
+  {
+    "nombres": "Pogo Cojitambo Jorge Armando",
+    "whatsapp": "593989762335",
+    "Correo": "armandopogo38@gmail.com",
+    "username": "japogo1",
+    "password": "JA1150175196",
+    "cedula": "1150175196"
+  },
+  {
+    "nombres": "Enriquez Buri Juana Ermelinda",
+    "whatsapp": "593939931597",
+    "Correo": "ermelinda.e26@gmail.com",
+    "username": "jeenriquez1",
+    "password": "JE1150200788",
+    "cedula": "1150200788 "
+  },
+  {
+    "nombres": "Ambuludi Ambuludi Itsmenia Guisela",
+    "whatsapp": "593993776078",
+    "Correo": "itsmeniambuludi@gmail.com",
+    "username": "igambuludi",
+    "password": "IG1150228938",
+    "cedula": "1150228938"
+  },
+  {
+    "nombres": "Vasquez Requelme Natasha Rafaela",
+    "whatsapp": "593986725786",
+    "Correo": "rafaelavasquezrequelme@gmail.com",
+    "username": "nrvasquez",
+    "password": "NR1150245767",
+    "cedula": "1150245767"
+  },
+  {
+    "nombres": "Luzon Cueva Deyse Elizabeth ",
+    "whatsapp": "593980939313",
+    "Correo": "cuevadeyseluzon@gmail.com",
+    "username": "dluzon",
+    "password": "D1150414363",
+    "cedula": "1150414363"
+  },
+  {
+    "nombres": "Torres Obando María Angeles",
+    "whatsapp": "593985242401",
+    "Correo": "mariadelosangelestorresobando@gmail.com",
+    "username": "matorres7",
+    "password": "MA1150434544",
+    "cedula": "1150434544 "
+  },
+  {
+    "nombres": "Vaca  Narcisa ",
+    "whatsapp": "593987100787",
+    "Correo": "narcisavacam@gmail.com",
+    "username": "nvaca",
+    "password": "N1201135736",
+    "cedula": "1201135736"
+  },
+  {
+    "nombres": "Moreno Leon Karin Marisol",
+    "whatsapp": "593991632122",
+    "Correo": "essentialtwins25@gmail.com",
+    "username": "kmmoreno",
+    "password": "KM1202654255",
+    "cedula": "1202654255"
+  },
+  {
+    "nombres": " lvarez Cevallos Patricia Catalina ",
+    "whatsapp": "593963419394",
+    "Correo": "P-attyca@hotmail.com",
+    "username": "plvarez",
+    "password": "P1202922504",
+    "cedula": "1202922504"
+  },
+  {
+    "nombres": "Carvajal Lucas Nereisi Teresa",
+    "whatsapp": "593997788981",
+    "Correo": "ncl_laminas@hotmail.com",
+    "username": "ntcarvajal",
+    "password": "NT1202955363",
+    "cedula": "1202955363 "
+  },
+  {
+    "nombres": "Arana Alvarado Kenia Giomar",
+    "whatsapp": "593997929081",
+    "Correo": "keniaaranaalvarado@hotmail.com",
+    "username": "kgarana",
+    "password": "KG1203209356",
+    "cedula": "1203209356"
+  },
+  {
+    "nombres": "Hualpa Rodríguez Verónica Silvia",
+    "whatsapp": "593999451307",
+    "Correo": "hualparodriguez_1987@hotmail.com",
+    "username": "vshualpa",
+    "password": "VS1203483043",
+    "cedula": "1203483043"
+  },
+  {
+    "nombres": "Romero Verdezoto Mariela Aurora",
+    "whatsapp": "593990626632",
+    "Correo": "mariromeve@yahoo.es",
+    "username": "maromero3",
+    "password": "MA1204106999",
+    "cedula": "1204106999"
+  },
+  {
+    "nombres": "Diaz Escobar Sandra Lorena",
+    "whatsapp": "593962163333",
+    "Correo": "lorenitali78@gmail.com",
+    "username": "sldiaz1",
+    "password": "SL1204143455",
+    "cedula": "1204143455"
+  },
+  {
+    "nombres": "Alvear Bravo María  Isabel",
+    "whatsapp": "593991368548",
+    "Correo": "alvearbravo05@gmail.com",
+    "username": "mialvear",
+    "password": "MI1204384646",
+    "cedula": "1204384646"
+  },
+  {
+    "nombres": "Suárez Mora Maximo Samuel",
+    "whatsapp": "593983614730",
+    "Correo": "maximo1204408@gmail.com",
+    "username": "mssuarez1",
+    "password": "MS1204408577",
+    "cedula": "1204408577"
+  },
+  {
+    "nombres": "Palma Macias Angelica Yadira",
+    "whatsapp": "593959235333",
+    "Correo": "yadirapalma37@gmail.com",
+    "username": "aypalma",
+    "password": "AY1204497430",
+    "cedula": "1204497430"
+  },
+  {
+    "nombres": "Tapia Solorzano Noraima Azucena",
+    "whatsapp": "593990158213",
+    "Correo": "tapianoraima@yahoo.es",
+    "username": "natapia",
+    "password": "NA1204659781",
+    "cedula": "1204659781"
+  },
+  {
+    "nombres": "Araujo García Martha Gardenia",
+    "whatsapp": "593980253271",
+    "Correo": "martha_a_266@hotmail.com",
+    "username": "mgaraujo",
+    "password": "MG1204910796",
+    "cedula": "1204910796"
+  },
+  {
+    "nombres": "Ube Lara Yessenia Nilepta",
+    "whatsapp": "593997413115",
+    "Correo": "yesseniaubelara@gmail.com",
+    "username": "ynube",
+    "password": "YN1204915019",
+    "cedula": "1204915019"
+  },
+  {
+    "nombres": "Basantes Varas Katiusca Tatiana",
+    "whatsapp": "593984602953",
+    "Correo": "basanteskaty11@gmail.com",
+    "username": "ktbasantes",
+    "password": "KT1205191222",
+    "cedula": "1205191222"
+  },
+  {
+    "nombres": "Zambrano Ganchozo Paola Maribel",
+    "whatsapp": "593989651961",
+    "Correo": "paolazambranoganchozo@gmail.com",
+    "username": "pmzambrano",
+    "password": "PM1205214149",
+    "cedula": "1205214149"
+  },
+  {
+    "nombres": "Espinoza Montalvan Kerly Janine",
+    "whatsapp": "593988460098",
+    "Correo": "espinozakerly76@gmail.com",
+    "username": "kjespinoza",
+    "password": "KJ1205358037",
+    "cedula": "1205358037"
+  },
+  {
+    "nombres": "Moreira Moran Cinthia Stefania",
+    "whatsapp": "593967469394",
+    "Correo": "cinthiamoreira1dge@hotmail.com",
+    "username": "csmoreira",
+    "password": "CS1205392242",
+    "cedula": "1205392242"
+  },
+  {
+    "nombres": "Lara Arroba Yadira Annabell",
+    "whatsapp": "593981354171",
+    "Correo": "yadiralara0721@gmail.com",
+    "username": "yalara",
+    "password": "YA1205582875",
+    "cedula": "1205582875"
+  },
+  {
+    "nombres": "Peralta León Cinthya Lisset",
+    "whatsapp": "593967836825",
+    "Correo": "fejocinl@hotmail.com",
+    "username": "clperalta",
+    "password": "CL1205920315",
+    "cedula": "1205920315"
+  },
+  {
+    "nombres": "Zambrano Bravo Tyrone Alfredo",
+    "whatsapp": "593993783629",
+    "Correo": "zambrano.atbz@gmail.com",
+    "username": "tazambrano1",
+    "password": "TA1206026260",
+    "cedula": "1206026260"
+  },
+  {
+    "nombres": "Carrasco Gaibor Jessenia Luisa",
+    "whatsapp": "593988401261",
+    "Correo": "chikys_cg18@hotmail.com",
+    "username": "jlcarrasco1",
+    "password": "JL1206121657",
+    "cedula": "1206121657"
+  },
+  {
+    "nombres": "Oñate Morales Soley Azucena",
+    "whatsapp": "56933979559",
+    "Correo": "soleyonate@gmail.com",
+    "username": "saonate",
+    "password": "SA1206311472",
+    "cedula": "1206311472"
+  },
+  {
+    "nombres": "Herrera Morales Marjorie Noralma",
+    "whatsapp": "593993487218",
+    "Correo": "herreramoralesmarjorie@gmail.com",
+    "username": "mnherrera",
+    "password": "MN1206410167",
+    "cedula": "1206410167"
+  },
+  {
+    "nombres": "Zamora Zamora Jennifer Cecilia",
+    "whatsapp": "593988524293",
+    "Correo": "jenniferzaza89@gmail.com",
+    "username": "jczamora",
+    "password": "JC1206629774",
+    "cedula": "1206629774"
+  },
+  {
+    "nombres": "Secaira Sobenis Katherine ",
+    "whatsapp": "593997430315",
+    "Correo": "Katherine.secaira@azzorti.com",
+    "username": "aksecaira",
+    "password": "KK1207558196",
+    "cedula": "1207558196"
+  },
+  {
+    "nombres": "Miranda Castro Flor María",
+    "whatsapp": "593968516081",
+    "Correo": "flormmirandacastro4@gmail.com",
+    "username": "fmmiranda",
+    "password": "FM1208009751",
+    "cedula": "1208009751 "
+  },
+  {
+    "nombres": "Zarate  Nayely ",
+    "whatsapp": "593999249360",
+    "Correo": "nayelyzarate00@gmail.com",
+    "username": "nzarate",
+    "password": "N1208296622",
+    "cedula": "1208296622"
+  },
+  {
+    "nombres": "Romero Martinez Karla Petita",
+    "whatsapp": "593994083305",
+    "Correo": "petita14romero@gmail.com",
+    "username": "kpromero",
+    "password": "KP1208811701",
+    "cedula": "1208811701"
+  },
+  {
+    "nombres": "Cordero Guillén María Elena",
+    "whatsapp": "593969719231",
+    "Correo": "maecorgui77@gmail.com",
+    "username": "mecordero",
+    "password": "ME1307978443",
+    "cedula": "1307978443 "
+  },
+  {
+    "nombres": "Velez Zamora Rosa Carolina",
+    "whatsapp": "593985922999",
+    "Correo": "rosi25veza@gmail.com",
+    "username": "rcvelez",
+    "password": "RC1309307732",
+    "cedula": "1309307732"
+  },
+  {
+    "nombres": "Villamar Delgado Adriana Alexandra",
+    "whatsapp": "593981485760",
+    "Correo": "adri.villamar08@gmail.com",
+    "username": "aavillamar1",
+    "password": "AA1309453684",
+    "cedula": "1309453684"
+  },
+  {
+    "nombres": "Leones Moreira Marlene Patricia",
+    "whatsapp": "593978884427",
+    "Correo": "patty182018@outlook.com",
+    "username": "mpleones",
+    "password": "MP1309580254",
+    "cedula": "1309580254"
+  },
+  {
+    "nombres": "Pico  Yomaira ",
+    "whatsapp": "593995678149",
+    "Correo": "yomairapico40@gmail.com",
+    "username": "ypico",
+    "password": "Y1310532401",
+    "cedula": "1310532401"
+  },
+  {
+    "nombres": "Zambrano Calderón Mariela Moncerrate",
+    "whatsapp": "593967641661",
+    "Correo": "marizambrano1@hotmail.es",
+    "username": "mmzambrano4",
+    "password": "MM1310555329",
+    "cedula": "1310555329"
+  },
+  {
+    "nombres": "Sornoza Cedeño Virginia Fernanda",
+    "whatsapp": "593997399104",
+    "Correo": "vsornozacedeno@yahoo.es",
+    "username": "vfsornoza",
+    "password": "VF1311201741",
+    "cedula": "1311201741"
+  },
+  {
+    "nombres": "Chichanda Vélez Diana Isabel",
+    "whatsapp": "593993234075",
+    "Correo": "chichandaisabel38@gmail.com",
+    "username": "dichichanda",
+    "password": "DI1311256299",
+    "cedula": "1311256299"
+  },
+  {
+    "nombres": "Hinojosa Alcivar Luis Ricardo",
+    "whatsapp": "593968758793",
+    "Correo": "rikdro24@gmail.com",
+    "username": "lrhinojosa",
+    "password": "LR1311471252",
+    "cedula": "1311471252"
+  },
+  {
+    "nombres": "Bermudez  Sandra ",
+    "whatsapp": "593998606325",
+    "Correo": "sandrybermudezcedeno@gmail.com",
+    "username": "sbermudez",
+    "password": "S1311496093",
+    "cedula": "1311496093"
+  },
+  {
+    "nombres": "Velez Solorzano Maria Liliana",
+    "whatsapp": "593997169186",
+    "Correo": "liliana_velez611@hotmail.com",
+    "username": "mlvelez3",
+    "password": "ML1311695629",
+    "cedula": "1311695629"
+  },
+  {
+    "nombres": "Escalante Gómez Gisella ",
+    "whatsapp": "593984889050",
+    "Correo": "gigicala47@gmail.com",
+    "username": "gescalante",
+    "password": "G1311872004",
+    "cedula": "1311872004"
+  },
+  {
+    "nombres": " vila Palacios Dayana Michelle",
+    "whatsapp": "593983428718",
+    "Correo": "einstein2siete@gmail.com",
+    "username": "dmvila",
+    "password": "DM1311901159",
+    "cedula": "1311901159"
+  },
+  {
+    "nombres": "Morales Moreira Eliana Monserrate",
+    "whatsapp": "593991760891",
+    "Correo": "elianamorales86@hotmail.com",
+    "username": "emmorales",
+    "password": "EM1312019159",
+    "cedula": "1312019159"
+  },
+  {
+    "nombres": "Alvarado Centeno Mayra Nataly",
+    "whatsapp": "593961628544",
+    "Correo": "centenonataly05@gmail.com",
+    "username": "mnalvarado",
+    "password": "MN1312233032",
+    "cedula": "1312233032"
+  },
+  {
+    "nombres": "Guadamud Gomez Isabel Marjorie",
+    "whatsapp": "593991910451",
+    "Correo": "isabelguadamudg@gmail.com",
+    "username": "imguadamud",
+    "password": "IM1312387440",
+    "cedula": "1312387440"
+  },
+  {
+    "nombres": "Velastegui Muñiz Celia Johanna",
+    "whatsapp": "593963658789",
+    "Correo": "velasteguijc1985@gmail.com",
+    "username": "cjvelastegui",
+    "password": "CJ1312429655",
+    "cedula": "1312429655"
+  },
+  {
+    "nombres": "Zambrano Andrade Gema Mariana",
+    "whatsapp": "593983764548",
+    "Correo": "gemazambrano91@gmail.com",
+    "username": "gmzambrano1",
+    "password": "GM1312629353",
+    "cedula": "1312629353"
+  },
+  {
+    "nombres": "Alvarado Lopez Erika Johanna",
+    "whatsapp": "593979808343",
+    "Correo": "alvaradoerika1992@gmail.com",
+    "username": "ejalvarado1",
+    "password": "EJ1312758921",
+    "cedula": "1312758921"
+  },
+  {
+    "nombres": "Lucas Unamuno Denisse Guadalupe",
+    "whatsapp": "593994119078",
+    "Correo": "denisselucas719@gmail.com",
+    "username": "dglucas1",
+    "password": "DG1313378422",
+    "cedula": "1313378422"
+  },
+  {
+    "nombres": "Calderón Baque Nayelly Melanie",
+    "whatsapp": "593998366386",
+    "Correo": "yiyhobaque@gmail.com",
+    "username": "nmcalderon1",
+    "password": "NM1313753756",
+    "cedula": "1313753756 "
+  },
+  {
+    "nombres": "Cedeño Anchundia Diego Alexander",
+    "whatsapp": "593986622595",
+    "Correo": "diegocedeno90@gmail.com",
+    "username": "dacedeno3",
+    "password": "DA1314693266",
+    "cedula": "1314693266"
+  },
+  {
+    "nombres": "Sánchez Rodríguez Karina Vanessa",
+    "whatsapp": "593960266390",
+    "Correo": "sanchezkarina190@gmail.com",
+    "username": "kvsanchez",
+    "password": "KV1314836824",
+    "cedula": "1314836824"
+  },
+  {
+    "nombres": "González Delgado Wendy Vanesa",
+    "whatsapp": "593986813300",
+    "Correo": "wvgd_1509@outlook.com",
+    "username": "wvgonzalez",
+    "password": "WV1314965466",
+    "cedula": "1314965466"
+  },
+  {
+    "nombres": "Zambrano Centeno Cinthia Marcela",
+    "whatsapp": "593979491893",
+    "Correo": "centenonataly05@gmail.com",
+    "username": "cmzambrano2",
+    "password": "CM1315656239",
+    "cedula": "1315656239"
+  },
+  {
+    "nombres": "Martinez Lino Evelyn Roxana",
+    "whatsapp": "593969840510",
+    "Correo": "martinezlinoevelynroxana@gmail.com",
+    "username": "ermartinez",
+    "password": "ER1315762409",
+    "cedula": "1315762409"
+  },
+  {
+    "nombres": "Chinga Franco Nayeska Mayerly",
+    "whatsapp": "593998276702",
+    "Correo": "mayerlychinga11@gmail.com",
+    "username": "nmchinga",
+    "password": "NM1315997559",
+    "cedula": "1315997559"
+  },
+  {
+    "nombres": " lava Zambrano Damaris Belén",
+    "whatsapp": "593997098605",
+    "Correo": "damarisalava2025@gmail.com",
+    "username": "dbalava",
+    "password": "DB1316114618",
+    "cedula": "1316114618"
+  },
+  {
+    "nombres": "Márquez Zambrano Maritza Isabel",
+    "whatsapp": "593989692730",
+    "Correo": "marquezmaritza575@gmail.com",
+    "username": "mimarquez",
+    "password": "MI1316844156",
+    "cedula": "1316844156"
+  },
+  {
+    "nombres": "Lopez Tello Rosa Elizabeth",
+    "whatsapp": "593991459351",
+    "Correo": "rosaelizabeth31@gmail.com",
+    "username": "relopez1",
+    "password": "RE1400510432",
+    "cedula": "1400510432"
+  },
+  {
+    "nombres": "Sanchez Aucay Wilfrido Augusto",
+    "whatsapp": "593939761803",
+    "Correo": "willopresidente@gmail.com",
+    "username": "wasanchez2",
+    "password": "WA1400576326",
+    "cedula": "1400576326"
+  },
+  {
+    "nombres": "Watink Tentets Jairo Ariolfo",
+    "whatsapp": "593982545015",
+    "Correo": "latacoop@gmail.com",
+    "username": "jawatink",
+    "password": "JA1400957195",
+    "cedula": "1400957195"
+  },
+  {
+    "nombres": "Chamik  Leticia ",
+    "whatsapp": "593969946329",
+    "Correo": "leticiachamik99@gmail.com",
+    "username": "lchamik",
+    "password": "L1401001191",
+    "cedula": "1401001191"
+  },
+  {
+    "nombres": "Quito Uzho Carmen Maribel",
+    "whatsapp": "593939927691",
+    "Correo": "marbellafb2022@gmail.com",
+    "username": "cmquito",
+    "password": "CM1401162860",
+    "cedula": "1401162860 "
+  },
+  {
+    "nombres": "Azuero Benitez Lili Mariluz",
+    "whatsapp": "593988243517",
+    "Correo": "lili.mariluz_@hotmail.com",
+    "username": "lmazuero",
+    "password": "LM1500356835",
+    "cedula": "1500356835"
+  },
+  {
+    "nombres": "Azuero Benitez Jackeline ",
+    "whatsapp": "593994804546",
+    "Correo": "crispam_2005@yahoo.com",
+    "username": "jazuero",
+    "password": "J1500356850",
+    "cedula": "1500356850"
+  },
+  {
+    "nombres": "Cabezas Paredes Deisy Jadira",
+    "whatsapp": "593990361435",
+    "Correo": "deisyjadira1982@gmail.com",
+    "username": "djcabezas",
+    "password": "DJ1500716053",
+    "cedula": "1500716053"
+  },
+  {
+    "nombres": "Tunay Tanguila Karen Tania",
+    "whatsapp": "593939988468",
+    "Correo": "tanguilakarentania@gmail.com",
+    "username": "kttunay",
+    "password": "KT1501227548",
+    "cedula": "1501227548"
+  },
+  {
+    "nombres": "Sánchez León Deysi Estefanía",
+    "whatsapp": "593969373589",
+    "Correo": "deysisanchez0708@gmail.com",
+    "username": "desanchez2",
+    "password": "DE1550109324",
+    "cedula": "1550109324"
+  },
+  {
+    "nombres": "Morales Arevalo Andrés Arturo",
+    "whatsapp": "593969506036",
+    "Correo": "connycordova_6@hotmail.com",
+    "username": "aamorales2",
+    "password": "AA1600471294",
+    "cedula": "1600471294"
+  },
+  {
+    "nombres": "López Aranda Mishell Isabel",
+    "whatsapp": "593994866032",
+    "Correo": "isavale300420@gmail.com",
+    "username": "milopez1",
+    "password": "MI1600508970",
+    "cedula": "1600508970 "
+  },
+  {
+    "nombres": "Chafla  Alexandra ",
+    "whatsapp": "593992661409",
+    "Correo": "alexachafla@hotmail.com",
+    "username": "achafla",
+    "password": "A1600541468",
+    "cedula": "1600541468"
+  },
+  {
+    "nombres": "Pandam Washicta Sheila Kurinua",
+    "whatsapp": "593990481654",
+    "Correo": "sheilapandam2323@gmail.com",
+    "username": "skpandam",
+    "password": "SK1601019597",
+    "cedula": "1601019597"
+  },
+  {
+    "nombres": "Kaikiat Chiriapa Mikaela Yanua",
+    "whatsapp": "593969608710",
+    "Correo": "kchyanua@gmail.com",
+    "username": "mykaikiat",
+    "password": "MY1601041971",
+    "cedula": "1601041971"
+  },
+  {
+    "nombres": "Pisfil  Dolores ",
+    "whatsapp": "51978007373",
+    "Correo": "dpisfil45@yahoo.com",
+    "username": "dpisfil",
+    "password": "tutq755OIL",
+    "cedula": "16754076"
+  },
+  {
+    "nombres": "Haro Campos Mary Edith",
+    "whatsapp": "51943825276",
+    "Correo": "mareth88@hotmail.com",
+    "username": "meharo1",
+    "password": "ME16792011",
+    "cedula": "16792011"
+  },
+  {
+    "nombres": "Caiza  Martha Susana",
+    "whatsapp": "593987012503",
+    "Correo": "susan.mcaiza@gmail.com",
+    "username": "mscaiza",
+    "password": "MS1704591633",
+    "cedula": "1704591633"
+  },
+  {
+    "nombres": "Rubio Bolaños Silvia Teresa",
+    "whatsapp": "593960906732",
+    "Correo": "silvir_@hotmail.com",
+    "username": "strubio",
+    "password": "ST1705143368",
+    "cedula": "1705143368"
+  },
+  {
+    "nombres": "Manteca Oñate Luisa María",
+    "whatsapp": "593982409415",
+    "Correo": "marialuisa.manteca@yahoo.es",
+    "username": "lmmanteca",
+    "password": "LM1705384392",
+    "cedula": "1705384392"
+  },
+  {
+    "nombres": "Segovia Sandoval Marlon Guillermo",
+    "whatsapp": "593995310432",
+    "Correo": "marlonsegovia633@gmail.com",
+    "username": "mgsegovia",
+    "password": "MG1705963948",
+    "cedula": "1705963948"
+  },
+  {
+    "nombres": "Hernández Naranjo Paola Alexandra",
+    "whatsapp": "593998131174",
+    "Correo": "paolahernandezn@gmail.com",
+    "username": "pahernandez",
+    "password": "PA1706545942",
+    "cedula": "1706545942"
+  },
+  {
+    "nombres": "Mateus  Edgar ",
+    "whatsapp": "593983478192",
+    "Correo": "erodrigomateus@gmail.com",
+    "username": "emateus",
+    "password": "E1706566005",
+    "cedula": "1706566005"
+  },
+  {
+    "nombres": "Fiallo Entiquez Gladys Rebeca",
+    "whatsapp": "593983907841",
+    "Correo": "gerencianuevocafe@gmail.com",
+    "username": "grfiallo",
+    "password": "GR1707886048",
+    "cedula": "1707886048"
+  },
+  {
+    "nombres": "Delgado Zaruma Sara Narcisa",
+    "whatsapp": "593992481593",
+    "Correo": "iniciativaempresarialsd@gmail.com",
+    "username": "sndelgado",
+    "password": "SN1707937825",
+    "cedula": "1707937825"
+  },
+  {
+    "nombres": "Sosa  Janneth ",
+    "whatsapp": "593992785686",
+    "Correo": "jannethsosa445@gmail.com",
+    "username": "jsosa",
+    "password": "J1708088602",
+    "cedula": "1708088602"
+  },
+  {
+    "nombres": "Proaño Pino María Elena",
+    "whatsapp": "593998010535",
+    "Correo": "malenapro64@gmail.com",
+    "username": "meproano1",
+    "password": "ME1708117641",
+    "cedula": "1708117641"
+  },
+  {
+    "nombres": "Pérez Carrera Margoth Teresa ",
+    "whatsapp": "593994926566",
+    "Correo": "margoth_perez16@hotmail.com",
+    "username": "mperez",
+    "password": "M1708676190",
+    "cedula": "1708676190"
+  },
+  {
+    "nombres": "Paladines Leon Martha Cecilia",
+    "whatsapp": "593963555690",
+    "Correo": "newmarthy01@gmail.com",
+    "username": "mcpaladines",
+    "password": "MC1709145278",
+    "cedula": "1709145278"
+  },
+  {
+    "nombres": "Lucio Ron Paola ",
+    "whatsapp": "593995653337",
+    "Correo": "paolalucioron@gmail.com",
+    "username": "kplucio",
+    "password": "PP1709570483",
+    "cedula": "1709570483"
+  },
+  {
+    "nombres": "Oña Oñ Blanca Alicia",
+    "whatsapp": "593980606633",
+    "Correo": "oalicia2809@gmail.com",
+    "username": "baona",
+    "password": "BA1709712010",
+    "cedula": "1709712010"
+  },
+  {
+    "nombres": "Rivera  Verónica ",
+    "whatsapp": "593984514771",
+    "Correo": "Verorivera1173@gmail.com",
+    "username": "vrivera",
+    "password": "V1709979692",
+    "cedula": "1709979692"
+  },
+  {
+    "nombres": "Gordon Betancourt Jackeline Rocio",
+    "whatsapp": "593984033675",
+    "Correo": "jackelinegordon2002@yahoo.es",
+    "username": "jrgordon1",
+    "password": "JR1709980138",
+    "cedula": "1709980138"
+  },
+  {
+    "nombres": "Simbaña Cabezas Ana Lucía",
+    "whatsapp": "593998919135",
+    "Correo": "anita-alsc@hotmail.es",
+    "username": "alsimbana1",
+    "password": "AL1710038793",
+    "cedula": "1710038793"
+  },
+  {
+    "nombres": "Moreno Morocho Janeth Maria ",
+    "whatsapp": "593996481207",
+    "Correo": "janesita_moreno@hotmail.com",
+    "username": "jmoreno",
+    "password": "J1710127349",
+    "cedula": "1710127349"
+  },
+  {
+    "nombres": "Arias Morillo Maria Vilma",
+    "whatsapp": "593998822281",
+    "Correo": "1mariaarias2014@gmail.com",
+    "username": "mvarias",
+    "password": "MV1710225838",
+    "cedula": "1710225838"
+  },
+  {
+    "nombres": "Collaguazo Ganan Jeanette Angeles",
+    "whatsapp": "593999242856",
+    "Correo": "j_angelescollaguazo@hotmail.com",
+    "username": "jacollaguazo2",
+    "password": "JA1710412485",
+    "cedula": "1710412485"
+  },
+  {
+    "nombres": "Quinga Gómez María Lucrecia",
+    "whatsapp": "593982499002",
+    "Correo": "lucrequinga@hotmail.com",
+    "username": "mlquinga",
+    "password": "ML1710417104",
+    "cedula": "1710417104"
+  },
+  {
+    "nombres": "Quillupangui Guanopatin Monica Rocio",
+    "whatsapp": "593992657514",
+    "Correo": "monicaq7319@gmail.com",
+    "username": "mrquillupangui",
+    "password": "MR1710487420",
+    "cedula": "1710487420"
+  },
+  {
+    "nombres": "Culqui Chacón Lurdes Viviana",
+    "whatsapp": "593984367077",
+    "Correo": "yviviana22@yahoo.es",
+    "username": "lvculqui",
+    "password": "LV1710826890",
+    "cedula": "1710826890"
+  },
+  {
+    "nombres": "Espejo Cardenas María Teresa",
+    "whatsapp": "593998846546",
+    "Correo": "maytespejo@hotmail.com",
+    "username": "mtespejo",
+    "password": "MT1711004448",
+    "cedula": "1711004448"
+  },
+  {
+    "nombres": "Velasquez Naranjo Giovanna Alexandra",
+    "whatsapp": "593984790247",
+    "Correo": "giovanaalexandravelasqueznaran@gmail.com",
+    "username": "gavelasquez1",
+    "password": "GA1711227544",
+    "cedula": "1711227544"
+  },
+  {
+    "nombres": "Rosero Mejia Janeth ",
+    "whatsapp": "593995635836",
+    "Correo": "negociobillonario@gmail.com",
+    "username": "jarosero3",
+    "password": "JA1711292621",
+    "cedula": "1711292621"
+  },
+  {
+    "nombres": "Naranjo Fuentala Emma Gioconda",
+    "whatsapp": "593961878999",
+    "Correo": "naranjoemma28@gmail.com",
+    "username": "egnaranjo1",
+    "password": "EG1711295327",
+    "cedula": "1711295327"
+  },
+  {
+    "nombres": "Quinche Vaca María Mercedes",
+    "whatsapp": "593980146899",
+    "Correo": "mercedesvaca2024@gmail.com",
+    "username": "mmquinche",
+    "password": "MM1711426849",
+    "cedula": "1711426849"
+  },
+  {
+    "nombres": "Chiriboga Vera Elba Carmen",
+    "whatsapp": "593996428278",
+    "Correo": "elbadelc@gmail.com",
+    "username": "ecchiriboga",
+    "password": "EC1711465581",
+    "cedula": "1711465581"
+  },
+  {
+    "nombres": "Garzon Rivera Maria Gabriela",
+    "whatsapp": "593994868184",
+    "Correo": "mariagabrielagarzon9@gmail.com",
+    "username": "mggarzon",
+    "password": "MG1711504322",
+    "cedula": "1711504322"
+  },
+  {
+    "nombres": "Calvachi  Jeferson ",
+    "whatsapp": "593998378644",
+    "Correo": "jcecalvachi@gmail.com",
+    "username": "jcalvachi",
+    "password": "J1711615565",
+    "cedula": "1711615565"
+  },
+  {
+    "nombres": "Idrobo Erazo Linda Janine",
+    "whatsapp": "593983714196",
+    "Correo": "luzdelamanecer123@gmail.com",
+    "username": "ljidrobo",
+    "password": "LJ1711640613",
+    "cedula": "1711640613 "
+  },
+  {
+    "nombres": "Aguirre López Claudia Leonila",
+    "whatsapp": "593993168997",
+    "Correo": "aguirre-claudia@hotmail.com",
+    "username": "claguirre1",
+    "password": "CL1711822203",
+    "cedula": "1711822203 "
+  },
+  {
+    "nombres": "Chimbo Tobar Sandra Elizabeth",
+    "whatsapp": "593960151377",
+    "Correo": "sandri.echt@gmail.com",
+    "username": "sechimbo",
+    "password": "SE1711911345",
+    "cedula": "1711911345"
+  },
+  {
+    "nombres": "Pacheco  Esmeralda ",
+    "whatsapp": "593987187457",
+    "Correo": "esmeprios@gmail.com",
+    "username": "epacheco",
+    "password": "E1711938074",
+    "cedula": "1711938074"
+  },
+  {
+    "nombres": "Serrano Evviche Dora María",
+    "whatsapp": "593964040672",
+    "Correo": "marydoryaj@hotmail.com",
+    "username": "dmserrano",
+    "password": "DM1711963619",
+    "cedula": "1711963619"
+  },
+  {
+    "nombres": "Zapata Castillo Angelita Teresa",
+    "whatsapp": "593988890908",
+    "Correo": "davichotere@hotmail.com",
+    "username": "atzapata",
+    "password": "AT1712004462",
+    "cedula": "1712004462"
+  },
+  {
+    "nombres": "Pulupa Pillalaza Nelson Gustavo",
+    "whatsapp": "593984229201",
+    "Correo": "Nelson.naow@outlook.com",
+    "username": "ngpulupa",
+    "password": "NG1712125366",
+    "cedula": "1712125366"
+  },
+  {
+    "nombres": "Toapanta Tene Jeannth Verónica",
+    "whatsapp": "593987089309",
+    "Correo": "chinitaveriux@hotmail.com",
+    "username": "jvtoapanta",
+    "password": "JV1712242377",
+    "cedula": "1712242377"
+  },
+  {
+    "nombres": "Herrera Chamorro Míriam Alexandra",
+    "whatsapp": "593963333711",
+    "Correo": "miadeti30@gmail.com",
+    "username": "maherrera7",
+    "password": "MA1712285822",
+    "cedula": "1712285822 "
+  },
+  {
+    "nombres": "Mejía Rodríguez Sonia Teresa",
+    "whatsapp": "593994540567",
+    "Correo": "sonitamldu@hotmail.com",
+    "username": "stmejia",
+    "password": "ST1712375540",
+    "cedula": "1712375540"
+  },
+  {
+    "nombres": "Cabrera Basantes Karina Francisca",
+    "whatsapp": "593996900891",
+    "Correo": "karinacabrerab@hotmail.com",
+    "username": "kfcabrera1",
+    "password": "KF1712410255",
+    "cedula": "1712410255"
+  },
+  {
+    "nombres": "Bonilla Jiménez Cintya Lorena",
+    "whatsapp": "593999752194",
+    "Correo": "naturessentcosmeticalkimica01@gmail.com",
+    "username": "clbonilla",
+    "password": "CL1712471323",
+    "cedula": "1712471323"
+  },
+  {
+    "nombres": "Puma Romero Gladys Fernanda",
+    "whatsapp": "593992559509",
+    "Correo": "Fernanda.puma@hotmail.com",
+    "username": "gfpuma",
+    "password": "GF1712478054",
+    "cedula": "1712478054"
+  },
+  {
+    "nombres": "Pizarro Moreira Magaly Margarita",
+    "whatsapp": "593987323461",
+    "Correo": "maggyp30@hotmail.com",
+    "username": "mmpizarro",
+    "password": "MM1712665239",
+    "cedula": "1712665239"
+  },
+  {
+    "nombres": "Guaigua Naula Elizabeth Rocío",
+    "whatsapp": "593987539122",
+    "Correo": "elizabethguaigua1974@gmail.com",
+    "username": "erguaigua",
+    "password": "ER1712671674",
+    "cedula": "1712671674"
+  },
+  {
+    "nombres": "Simbana  Veronica ",
+    "whatsapp": "593980235858",
+    "Correo": "veronik33_sq@hotmail.com",
+    "username": "vsimbana",
+    "password": "V1712748308",
+    "cedula": "1712748308"
+  },
+  {
+    "nombres": "Pino Guagrilla Alexandra Mercedes",
+    "whatsapp": "593993037719",
+    "Correo": "alexapino.29@hotmail.com",
+    "username": "ampino",
+    "password": "AM1712758505",
+    "cedula": "1712758505"
+  },
+  {
+    "nombres": "Rea Argandoña Nora Elizabeth",
+    "whatsapp": "593987732857",
+    "Correo": "eli22zabethrea@gmail.com",
+    "username": "nerea",
+    "password": "NE1712839834",
+    "cedula": "1712839834"
+  },
+  {
+    "nombres": "Olalla Urrea Elena Verónica",
+    "whatsapp": "593991956192",
+    "Correo": "elenarony2880@gmail.com",
+    "username": "evolalla",
+    "password": "EV1712963196",
+    "cedula": "1712963196"
+  },
+  {
+    "nombres": "Pozo  Angélica Araceli",
+    "whatsapp": "593987266577",
+    "Correo": "arianatorres_alan@hotmail.com",
+    "username": "aapozo",
+    "password": "AA1713026613",
+    "cedula": "1713026613"
+  },
+  {
+    "nombres": "Almendariz Gallo Carmen Elena",
+    "whatsapp": "593995023035",
+    "Correo": "almendarizelena75@gmail.com",
+    "username": "cealmendariz",
+    "password": "CE1713065439",
+    "cedula": "1713065439 "
+  },
+  {
+    "nombres": "Coronel Cajamarca Dolores Viviana",
+    "whatsapp": "593995681289",
+    "Correo": "coronelviviana04@gmail.com",
+    "username": "dvcoronel",
+    "password": "DV1713072443",
+    "cedula": "1713072443"
+  },
+  {
+    "nombres": "Loaiza Rodriguez Daniel Oswaldo",
+    "whatsapp": "593960995777",
+    "Correo": "danieloaizarodriguez@gmail.com",
+    "username": "doloaiza",
+    "password": "DO1713155412",
+    "cedula": "1713155412"
+  },
+  {
+    "nombres": "Chafla  Maria Clemencia",
+    "whatsapp": "593958891286",
+    "Correo": "clemencia.chafla@gmail.com",
+    "username": "mcchafla",
+    "password": "MC1713191516",
+    "cedula": "1713191516"
+  },
+  {
+    "nombres": "Orquera Sanguña Marina Elizabeth",
+    "whatsapp": "593996090784",
+    "Correo": "marinaorquera@hotmail.com",
+    "username": "meorquera",
+    "password": "ME1713228284",
+    "cedula": "1713228284"
+  },
+  {
+    "nombres": "Orquera Sanguña Jesenia Patricia",
+    "whatsapp": "593995387978",
+    "Correo": "patty.orquera@hotmail.com",
+    "username": "jporquera",
+    "password": "JP1713228292",
+    "cedula": "1713228292 "
+  },
+  {
+    "nombres": "Cisneros  Marcela ",
+    "whatsapp": "593983118524",
+    "Correo": "marcemunios@gmail.com",
+    "username": "mcisneros",
+    "password": "M1713282638",
+    "cedula": "1713282638 "
+  },
+  {
+    "nombres": "Tapia  Carolina ",
+    "whatsapp": "593987221675",
+    "Correo": "caro.tapiacrespo@gmail.com",
+    "username": "cltapia",
+    "password": "C1713393278",
+    "cedula": "1713393278"
+  },
+  {
+    "nombres": "Ortiz Chicaiza Maria Teresa",
+    "whatsapp": "593984273025",
+    "Correo": "teresachicaiza14@gmail.com",
+    "username": "mtortiz",
+    "password": "MT1713428249",
+    "cedula": "1713428249"
+  },
+  {
+    "nombres": "Hidalgo Hidalgo Marcela Cristina",
+    "whatsapp": "593991153765",
+    "Correo": "marcela.hidalgo2020@gmail.com",
+    "username": "mchidalgo1",
+    "password": "MC1713550042",
+    "cedula": "1713550042"
+  },
+  {
+    "nombres": "Arana Lovaro Alexandra Elizabeth",
+    "whatsapp": "593999917213",
+    "Correo": "alexandrarana@hotmail.com",
+    "username": "aearana",
+    "password": "AE1713562963",
+    "cedula": "1713562963"
+  },
+  {
+    "nombres": "Torres  Marisol ",
+    "whatsapp": "593983849351",
+    "Correo": "marisoltorresdv@gmail.com",
+    "username": "mtorres6",
+    "password": "M1713802633",
+    "cedula": "1713802633"
+  },
+  {
+    "nombres": "Montaquiza Herrera Jeanneth Alexandra",
+    "whatsapp": "34665265699",
+    "Correo": "janetmontaquiza@gmail.com",
+    "username": "jamontaquiza",
+    "password": "JA1713923702",
+    "cedula": "1713923702"
+  },
+  {
+    "nombres": "Salazar  Emma ",
+    "whatsapp": "593978884011",
+    "Correo": "inscripcionesboomecuadoreymi@gmail.com",
+    "username": "esalazar1",
+    "password": "E1713992111",
+    "cedula": "1713992111"
+  },
+  {
+    "nombres": "Campoverde Tandazo Lucia Alexandra",
+    "whatsapp": "59393570279",
+    "Correo": "campoverdelucia82@gmail.com",
+    "username": "lacampoverde1",
+    "password": "LA1714059670",
+    "cedula": "1714059670 "
+  },
+  {
+    "nombres": "Chiscued Pantoja Silvia Lorena",
+    "whatsapp": "593995178622",
+    "Correo": "chiscuedlorena@gmail.com",
+    "username": "slchiscued",
+    "password": "SL1714080403",
+    "cedula": "1714080403 "
+  },
+  {
+    "nombres": "Benavides Beltran Paola Cristina",
+    "whatsapp": "593995004675",
+    "Correo": "paola_cbb@yahoo.com",
+    "username": "pcbenavides",
+    "password": "PC1714093919",
+    "cedula": "1714093919"
+  },
+  {
+    "nombres": "Cañar Guamán Melania Cisne",
+    "whatsapp": "593992618261",
+    "Correo": "melajosecisne@gmail.com",
+    "username": "mccanar",
+    "password": "MC1714138284",
+    "cedula": "1714138284"
+  },
+  {
+    "nombres": "Llumigusin  Jenny ",
+    "whatsapp": "593996821971",
+    "Correo": "alejallu@hotmail.com",
+    "username": "jallumigusin",
+    "password": "J1714153648",
+    "cedula": "1714153648"
+  },
+  {
+    "nombres": "Barona García Bertha Mariela",
+    "whatsapp": "593994892635",
+    "Correo": "vivasbertha1@gmail.com",
+    "username": "bmbarona",
+    "password": "BM1714213046",
+    "cedula": "1714213046"
+  },
+  {
+    "nombres": "Tenorio Barreros Silvia Alejandra",
+    "whatsapp": "593960411568",
+    "Correo": "silviatenorio2020@gmail.com",
+    "username": "satenorio",
+    "password": "SA1714304290",
+    "cedula": "1714304290"
+  },
+  {
+    "nombres": "Simbaña  Elena ",
+    "whatsapp": "593997797222",
+    "Correo": "elenadelpilarsc@gmail.com",
+    "username": "esimbana",
+    "password": "E1714440698",
+    "cedula": "1714440698"
+  },
+  {
+    "nombres": "Terán Nieto María Belén",
+    "whatsapp": "593963134975",
+    "Correo": "belenteran356@gmail.com",
+    "username": "mbteran",
+    "password": "MB1714537196",
+    "cedula": "1714537196"
+  },
+  {
+    "nombres": "Larrea Balcazar Karina Liszeth",
+    "whatsapp": "593984538037",
+    "Correo": "karylisz88@gmail.com",
+    "username": "kllarrea",
+    "password": "KL1714588090",
+    "cedula": "1714588090"
+  },
+  {
+    "nombres": "Peñaherrera Racines Viviana Raquel",
+    "whatsapp": "593985576340",
+    "Correo": "viviwto96@hotmail.com",
+    "username": "vrpenaherrera",
+    "password": "VR1714628029",
+    "cedula": "1714628029"
+  },
+  {
+    "nombres": " Moran Quinchuqui ",
+    "whatsapp": "593999839434",
+    "Correo": "krist-151@hotmail.com",
+    "username": "q",
+    "password": "Q1714633326",
+    "cedula": "1714633326"
+  },
+  {
+    "nombres": "Andrango Mayalita Silvia Lorena",
+    "whatsapp": "593994781242",
+    "Correo": "silvia_slam@hotmail.com",
+    "username": "slandrango",
+    "password": "SL1714674593",
+    "cedula": "1714674593"
+  },
+  {
+    "nombres": "Loor Sanchez Ivanna Angeles",
+    "whatsapp": "593985042511",
+    "Correo": "loorsancheivanna@gmail.com",
+    "username": "ialoor1",
+    "password": "IA1714728829",
+    "cedula": "1714728829"
+  },
+  {
+    "nombres": "Morales  Belen ",
+    "whatsapp": "593982506762",
+    "Correo": "mabemoraleso@gmail.com",
+    "username": "bmorales",
+    "password": "B1714769062",
+    "cedula": "1714769062"
+  },
+  {
+    "nombres": "Sinchiguano Tupiza Carmen Leonor",
+    "whatsapp": "593984562894",
+    "Correo": "carmitasinchiguano@gmail.com",
+    "username": "clsinchiguano",
+    "password": "CL1714831102",
+    "cedula": "1714831102"
+  },
+  {
+    "nombres": "Urbina Allauca Yanira Cristina",
+    "whatsapp": "593984648965",
+    "Correo": "brisatap0908@gmail.com",
+    "username": "ycurbina",
+    "password": "YC1715117402",
+    "cedula": "1715117402"
+  },
+  {
+    "nombres": "Narváez Guerrero Sandra Antonieta",
+    "whatsapp": "593995092320",
+    "Correo": "sang_04@hotmail.com",
+    "username": "sanarvaez2",
+    "password": "SA1715180780",
+    "cedula": "1715180780"
+  },
+  {
+    "nombres": "Loachamin Reimundo Norma Mercedes",
+    "whatsapp": "593984090925",
+    "Correo": "normy_1986@hotmail.com",
+    "username": "nmloachamin",
+    "password": "NM1715189229",
+    "cedula": "1715189229 "
+  },
+  {
+    "nombres": "Bohórquez Pérez Johanna Fernanda",
+    "whatsapp": "593983240814",
+    "Correo": "joha28bohorquez@gmail.com",
+    "username": "jfbohorquez",
+    "password": "JF1715194161",
+    "cedula": "1715194161"
+  },
+  {
+    "nombres": "Rivas Paladines Rosa Maria",
+    "whatsapp": "593994385596",
+    "Correo": "rosyrivaspaladines154@gmail.com",
+    "username": "rmrivas",
+    "password": "RM1715718886",
+    "cedula": "1715718886"
+  },
+  {
+    "nombres": "Oña Anguisaca Sonia Paulina",
+    "whatsapp": "593984475936",
+    "Correo": "sonypauli1580@hotmail.com",
+    "username": "spona",
+    "password": "SP1715899843",
+    "cedula": "1715899843"
+  },
+  {
+    "nombres": "Rosales Onofa Laura Mercedes",
+    "whatsapp": "593987997622",
+    "Correo": "lmrosaleso79@hotmail.com",
+    "username": "lmrosales",
+    "password": "LM1716104227",
+    "cedula": "1716104227"
+  },
+  {
+    "nombres": "Tituaña Pastrano Nataly Johanna",
+    "whatsapp": "593979246084",
+    "Correo": "natyjo27@gmail.com",
+    "username": "njtituana",
+    "password": "NJ1716200678",
+    "cedula": "1716200678"
+  },
+  {
+    "nombres": "Herrera Guerrero José Gustavo",
+    "whatsapp": "593983845243",
+    "Correo": "josh_gus20@hotmail.com",
+    "username": "jgherrera2",
+    "password": "JG1716252885",
+    "cedula": "1716252885"
+  },
+  {
+    "nombres": "Segura Calderon Andrea Fernanda",
+    "whatsapp": "19143172302",
+    "Correo": "andreafernanda0126@gmail.com",
+    "username": "afsegura",
+    "password": "AF1716283617",
+    "cedula": "1716283617"
+  },
+  {
+    "nombres": "Merino Guevara Ana Leonor",
+    "whatsapp": "593993956612",
+    "Correo": "merinoana812@gmail.com",
+    "username": "almerino",
+    "password": "AL1716304769",
+    "cedula": "1716304769"
+  },
+  {
+    "nombres": "Reyes Intriago Juana Joady",
+    "whatsapp": "593995514773",
+    "Correo": "juana1402reyes@gmail.com",
+    "username": "jjreyes",
+    "password": "JJ1716381684",
+    "cedula": "1716381684"
+  },
+  {
+    "nombres": "Cabezas Ayala Karina Rosario",
+    "whatsapp": "593983700894",
+    "Correo": "kary-na_ayala@hotmail.com",
+    "username": "krcabezas",
+    "password": "KR1716450646",
+    "cedula": "1716450646"
+  },
+  {
+    "nombres": "Pilicita Arroba Nancy Rosario",
+    "whatsapp": "593986822068",
+    "Correo": "nancypilicita83@gmail.com",
+    "username": "npilicita",
+    "password": "NR1716462823",
+    "cedula": "1716462823"
+  },
+  {
+    "nombres": "Aguirre Chuquimarca Liliana Magali",
+    "whatsapp": "593993375479",
+    "Correo": "liliana1magali@gmail.com",
+    "username": "lmaguirre1",
+    "password": "LM1716496961",
+    "cedula": "1716496961"
+  },
+  {
+    "nombres": "Dávila  Sara ",
+    "whatsapp": "593980916342",
+    "Correo": "saragabrieladav@gmail.com",
+    "username": "sdavila",
+    "password": "S1716779697",
+    "cedula": "1716779697"
+  },
+  {
+    "nombres": "Aldaz Gordon Nicolás Alejandro",
+    "whatsapp": "593983334898",
+    "Correo": "nic.ag.16@hotmail.com",
+    "username": "naaldaz",
+    "password": "NA1716876725",
+    "cedula": "1716876725"
+  },
+  {
+    "nombres": "Montero Rivera Silvia Alexandra",
+    "whatsapp": "593959908538",
+    "Correo": "monterosilvia13@gmail.com",
+    "username": "samontero",
+    "password": "SA1716923188",
+    "cedula": "1716923188"
+  },
+  {
+    "nombres": "Barrezueta Guerrero Catalina Alexandra",
+    "whatsapp": "593987740539",
+    "Correo": "catalinabarrezueta@gmail.com",
+    "username": "cabarrezueta",
+    "password": "CA1716949910",
+    "cedula": "1716949910"
+  },
+  {
+    "nombres": "Baquero Baquero María José",
+    "whatsapp": "593998664313",
+    "Correo": "majosita2389@hotmail.com",
+    "username": "mjbaquero",
+    "password": "MJ1717125726",
+    "cedula": "1717125726"
+  },
+  {
+    "nombres": "Chiluisa Vitery Raul Esteban",
+    "whatsapp": "593992795578",
+    "Correo": "esteban.chiluisa@gmail.com",
+    "username": "rechiluisa",
+    "password": "RE1717180671",
+    "cedula": "1717180671"
+  },
+  {
+    "nombres": "Orozco Orozco María Paulina",
+    "whatsapp": "593987454036",
+    "Correo": "paulipolli_95@hotmail.com",
+    "username": "mporozco",
+    "password": "MP1717193963",
+    "cedula": "1717193963"
+  },
+  {
+    "nombres": "Gaona Jaramillo Vicenta Delicia",
+    "whatsapp": "593999691351",
+    "Correo": "vickydistribuidorindependiente@gmail.com",
+    "username": "vdgaona",
+    "password": "VD1717299521",
+    "cedula": "1717299521"
+  },
+  {
+    "nombres": "Pinzón Auquillas Cielo Cisne",
+    "whatsapp": "593958693883",
+    "Correo": "pinardelcielo@gmail.com",
+    "username": "ccpinzon",
+    "password": "CC1717344673",
+    "cedula": "1717344673"
+  },
+  {
+    "nombres": "Valarezo Zapota Carmen Avelina",
+    "whatsapp": "593987530600",
+    "Correo": "carmenavelinavalarezo1981@gmail.com",
+    "username": "cavalarezo1",
+    "password": "CA1717492167",
+    "cedula": "1717492167"
+  },
+  {
+    "nombres": "Acaro Cofre Victoria Elizabeth",
+    "whatsapp": "593969056544",
+    "Correo": "elizabethacarocofre@gmail.com",
+    "username": "veacaro",
+    "password": "VE1717547556",
+    "cedula": "1717547556"
+  },
+  {
+    "nombres": "Cevallos Ruiz Ariana Cristina",
+    "whatsapp": "593989524589",
+    "Correo": "arianacristinacevallos@hotmail.com",
+    "username": "accevallos",
+    "password": "AC1717566754",
+    "cedula": "1717566754"
+  },
+  {
+    "nombres": "Suárez  Yajaira ",
+    "whatsapp": "593985585181",
+    "Correo": "yamasume@gmail.com",
+    "username": "ysuarez1",
+    "password": "Y1717569741",
+    "cedula": "1717569741"
+  },
+  {
+    "nombres": "Campaña Rubio Hortencia Pamela",
+    "whatsapp": "593958849157",
+    "Correo": "pamela91campana@gmail.com",
+    "username": "hpcampana",
+    "password": "HP1717580797",
+    "cedula": "1717580797"
+  },
+  {
+    "nombres": "Chisaguano  Silvia ",
+    "whatsapp": "593981755045",
+    "Correo": "silviachisaguano53@gmail.com",
+    "username": "schisaguano",
+    "password": "S1717597312",
+    "cedula": "1717597312"
+  },
+  {
+    "nombres": "Vélez  Rosa ",
+    "whatsapp": "593988306823",
+    "Correo": "velez1983rosa@gmail.com",
+    "username": "rvelez",
+    "password": "R1717682734",
+    "cedula": "1717682734"
+  },
+  {
+    "nombres": "Baquero  Priscila ",
+    "whatsapp": "593994262061",
+    "Correo": "priscilabaquero01@gmail.com",
+    "username": "pbaquero",
+    "password": "P1717703043",
+    "cedula": "1717703043"
+  },
+  {
+    "nombres": "Peña Arias Diana Judith",
+    "whatsapp": "593959138655",
+    "Correo": "f.dianys.m@gmail.com",
+    "username": "djpena",
+    "password": "DJ1718092768",
+    "cedula": "1718092768"
+  },
+  {
+    "nombres": "Torres Salas  Aidee Amparo",
+    "whatsapp": "593960136928",
+    "Correo": "ampari-to1@hotmail.com",
+    "username": "aatorressalas",
+    "password": "AA1718253923",
+    "cedula": "1718253923"
+  },
+  {
+    "nombres": "Delgado Guano Andrés Francisco",
+    "whatsapp": "593984589715",
+    "Correo": "andres4gss@gmail.com",
+    "username": "afdelgado1",
+    "password": "AF1718373747",
+    "cedula": "1718373747"
+  },
+  {
+    "nombres": "Ocampo Ruano Daysi Janneth",
+    "whatsapp": "593999647001",
+    "Correo": "daysiocamp@gmail.com",
+    "username": "djocampo",
+    "password": "DJ1718481144",
+    "cedula": "1718481144"
+  },
+  {
+    "nombres": "Zapata  Jessica ",
+    "whatsapp": "593992889026",
+    "Correo": "jessicazapatacero5@gmail.com",
+    "username": "jzapata",
+    "password": "J1718675125",
+    "cedula": "1718675125"
+  },
+  {
+    "nombres": "Morales Chuquirima Luis Javier",
+    "whatsapp": "34695268673",
+    "Correo": "javimomsn@gmail.com",
+    "username": "ljmorales",
+    "password": "LJ1718738675",
+    "cedula": "1718738675"
+  },
+  {
+    "nombres": "Calvopiña Yanez Ligia Beatriz",
+    "whatsapp": "593964274533",
+    "Correo": "kasandragemenis@gmail.com",
+    "username": "lbcalvopina",
+    "password": "LB1718893827",
+    "cedula": "1718893827"
+  },
+  {
+    "nombres": "Muñoz Imbaquinga Michelle Stefania",
+    "whatsapp": "593999969510",
+    "Correo": "michelleoriflame30@gmail.com",
+    "username": "msmunoz1",
+    "password": "MS1719098764",
+    "cedula": "1719098764"
+  },
+  {
+    "nombres": "Pillajo Molina Geovanna Rocío",
+    "whatsapp": "593987834115",
+    "Correo": "geovis-vg@hotmail.com",
+    "username": "grpillajo",
+    "password": "GR1719300608",
+    "cedula": "1719300608 "
+  },
+  {
+    "nombres": "Marcillo Rivas Aracely Marina",
+    "whatsapp": "593959044969",
+    "Correo": "aracelymarcillo72@gmail.com",
+    "username": "ammarcillo2",
+    "password": "AM1719335794",
+    "cedula": "1719335794"
+  },
+  {
+    "nombres": "Rea  Laura ",
+    "whatsapp": "593983646539",
+    "Correo": "laurareaiza@hotmail.com",
+    "username": "lrea",
+    "password": "L1719381954",
+    "cedula": "1719381954 "
+  },
+  {
+    "nombres": "Pallo Oña Ana Lucia",
+    "whatsapp": "593987455703",
+    "Correo": "anapallo08@gmail.com",
+    "username": "alpallo1",
+    "password": "AL1719414110",
+    "cedula": "1719414110"
+  },
+  {
+    "nombres": "Díaz Rubio María Fernanda",
+    "whatsapp": "593992774574",
+    "Correo": "maferd84@hotmail.com",
+    "username": "mfdiaz",
+    "password": "MF1719451831",
+    "cedula": "1719451831"
+  },
+  {
+    "nombres": "Mora Moreira Paulina Fernanda",
+    "whatsapp": "593998494189",
+    "Correo": "paulinamora202@gmail.com",
+    "username": "pfmora",
+    "password": "PF1719458026",
+    "cedula": "1719458026"
+  },
+  {
+    "nombres": "Toapanta Fajardo Diana Elizabeth",
+    "whatsapp": "593984600011",
+    "Correo": "eliza22diani@gmail.com",
+    "username": "detoapanta2",
+    "password": "DE1719474577",
+    "cedula": "1719474577"
+  },
+  {
+    "nombres": "Jami Oña Nancy Paulina",
+    "whatsapp": "593983505107",
+    "Correo": "nancyjami1042@gmail.com",
+    "username": "npjami",
+    "password": "NP1719886069",
+    "cedula": "1719886069"
+  },
+  {
+    "nombres": "Lincango Pillajo Patricia Micaela",
+    "whatsapp": "593984529977",
+    "Correo": "patriciamicaela84@gmail.com",
+    "username": "pmlincango",
+    "password": "PM1719908715",
+    "cedula": "1719908715"
+  },
+  {
+    "nombres": "Anasi Nacimba Diana Carolina",
+    "whatsapp": "593987077392",
+    "Correo": "didicarola@gmail.com",
+    "username": "dcanasi",
+    "password": "DC1719996405",
+    "cedula": "1719996405"
+  },
+  {
+    "nombres": "Urrego Cevallos Adriana Francisca",
+    "whatsapp": "593969060190",
+    "Correo": "adriana3112cevallos@gmail.com",
+    "username": "afurrego",
+    "password": "AF1720172566",
+    "cedula": "1720172566"
+  },
+  {
+    "nombres": "Alvarado Correa Evelyn Gabriela",
+    "whatsapp": "593997418597",
+    "Correo": "evelyn.alvarado@azzorti.com",
+    "username": "egalvarado1",
+    "password": "EG1720470432",
+    "cedula": "1720470432"
+  },
+  {
+    "nombres": "Puma Araujo Andrea Carolina",
+    "whatsapp": "593997000717",
+    "Correo": "andreca2801@gmail.com",
+    "username": "acpuma",
+    "password": "AC1720476033",
+    "cedula": "1720476033"
+  },
+  {
+    "nombres": "Verdezoto Luna María Fernanda",
+    "whatsapp": "593980319112",
+    "Correo": "mariafernanda628@yahoo.com",
+    "username": "mfverdezoto",
+    "password": "MF1720562485",
+    "cedula": "1720562485"
+  },
+  {
+    "nombres": "González Villarroel Estefania Sarai",
+    "whatsapp": "593981842875",
+    "Correo": "saryestef3115@gmail.com",
+    "username": "esgonzalez",
+    "password": "ES1720627387",
+    "cedula": "1720627387 "
+  },
+  {
+    "nombres": "Farinango Toapanta María Inés",
+    "whatsapp": "593985179462",
+    "Correo": "inecitafarinango@gmail.com",
+    "username": "mifarinango",
+    "password": "MI1720806114",
+    "cedula": "1720806114"
+  },
+  {
+    "nombres": "Yugsi Satian María Delia",
+    "whatsapp": "593962239570",
+    "Correo": "maryluyugsi@gmail.com",
+    "username": "mdyugsi",
+    "password": "MD1720810371",
+    "cedula": "1720810371"
+  },
+  {
+    "nombres": "Guazco  Jose Luis",
+    "whatsapp": "593984466264",
+    "Correo": "joseluisguazco@gmail.com",
+    "username": "jlguazco",
+    "password": "JL1720813375",
+    "cedula": "1720813375"
+  },
+  {
+    "nombres": "Cobeña Chila Erika Alexandra",
+    "whatsapp": "593963896193",
+    "Correo": "erik_laflakita@hotmail.com",
+    "username": "eacobena",
+    "password": "EA1720836525",
+    "cedula": "1720836525"
+  },
+  {
+    "nombres": "Loya  Marco ",
+    "whatsapp": "593980293462",
+    "Correo": "marcoviniciotoazaloya@gmail.com",
+    "username": "mloya",
+    "password": "M1721135463",
+    "cedula": "1721135463"
+  },
+  {
+    "nombres": "Guanoluisa Paredes Ana María",
+    "whatsapp": "593985781939",
+    "Correo": "guanoluisaanita809@gmail.com",
+    "username": "amguanoluisa",
+    "password": "AM1721149605",
+    "cedula": "1721149605"
+  },
+  {
+    "nombres": "Guaita Paillacho Tania Estefania",
+    "whatsapp": "593961976991",
+    "Correo": "tania_ori@outlook.com",
+    "username": "teguaita",
+    "password": "TE1721256640",
+    "cedula": "1721256640"
+  },
+  {
+    "nombres": "Jiménez Arias Mónica Teresa",
+    "whatsapp": "593985373503",
+    "Correo": "monica29231@hotmail.com",
+    "username": "mtjimenez",
+    "password": "MT1721367785",
+    "cedula": "1721367785"
+  },
+  {
+    "nombres": "Salvatierra Salvatierra Mariuxi Vanessa",
+    "whatsapp": "593939769313",
+    "Correo": "mvssalvatierra@gmail.com",
+    "username": "mvsalvatierra",
+    "password": "MV1721438222",
+    "cedula": "1721438222"
+  },
+  {
+    "nombres": "Albán Morales Lizeth Estefanía",
+    "whatsapp": "593983482721",
+    "Correo": "stefyalban17@gmail.com",
+    "username": "lealban",
+    "password": "LE1721584017",
+    "cedula": "1721584017"
+  },
+  {
+    "nombres": "Cuichan Codena Erika Belén",
+    "whatsapp": "593968892828",
+    "Correo": "erika-belen23@hotmail.com",
+    "username": "ebcuichan",
+    "password": "EB1721645057",
+    "cedula": "1721645057"
+  },
+  {
+    "nombres": "Catucuamba Albacura Jessica Alejandra",
+    "whatsapp": "34637460361",
+    "Correo": "jessik_ale23@hotmail.com",
+    "username": "jacatucuamba",
+    "password": "JA1721833729",
+    "cedula": "1721833729"
+  },
+  {
+    "nombres": "Moran  Edith ",
+    "whatsapp": "593958814779",
+    "Correo": "edithmoran1@hotmail.com",
+    "username": "ejmoran",
+    "password": "EJ1721844122",
+    "cedula": "1721844122"
+  },
+  {
+    "nombres": "Toapanta Valenzuela Diana Paola",
+    "whatsapp": "539995066416",
+    "Correo": "paomcmiki40@gmail.com",
+    "username": "dptoapanta",
+    "password": "DP1721992434",
+    "cedula": "1721992434"
+  },
+  {
+    "nombres": "Hidalgo Moreno Jonathan Richard",
+    "whatsapp": "593998245382",
+    "Correo": "korax_hidalgo@hotmail.com",
+    "username": "jrhidalgo1",
+    "password": "JR1722268479",
+    "cedula": "1722268479"
+  },
+  {
+    "nombres": "Cruz Guillín Michelle Sthefannya",
+    "whatsapp": "593984873441",
+    "Correo": "sthef1993m@outlook.es",
+    "username": "mscruz",
+    "password": "MS1722383880",
+    "cedula": "1722383880"
+  },
+  {
+    "nombres": "Córdova  Evelin ",
+    "whatsapp": "593979029700",
+    "Correo": "evelincordova24@gmail.com",
+    "username": "ecordova",
+    "password": "E1722414214",
+    "cedula": "1722414214"
+  },
+  {
+    "nombres": "Mendoza  Diego Fernando",
+    "whatsapp": "593962804869",
+    "Correo": "diego_mendoza_conta@hotmail.com",
+    "username": "dfmendoza",
+    "password": "DF1722643515",
+    "cedula": "1722643515"
+  },
+  {
+    "nombres": "Nacimba Nacimba Doris Sofía",
+    "whatsapp": "593983524825",
+    "Correo": "dorissofianacimba@gmail.com",
+    "username": "dsnacimba",
+    "password": "DS1722663794",
+    "cedula": "1722663794"
+  },
+  {
+    "nombres": "Angamarca Angamarca Glenda Elizabeth",
+    "whatsapp": "593984192671",
+    "Correo": "glendelis_62j@yahoo.com",
+    "username": "geangamarca",
+    "password": "GE1722791314",
+    "cedula": "1722791314"
+  },
+  {
+    "nombres": "Morales Abalco Johana Stefania",
+    "whatsapp": "593995032510",
+    "Correo": "stefymoralesabalco@gmail.com",
+    "username": "jsmorales1",
+    "password": "JS1722866355",
+    "cedula": "1722866355"
+  },
+  {
+    "nombres": "Cordero Nieto María Fernanda",
+    "whatsapp": "593987193099",
+    "Correo": "mafercordero0309@gmail.com",
+    "username": "mfcordero",
+    "password": "MF1723009922",
+    "cedula": "1723009922"
+  },
+  {
+    "nombres": "Cacoango Cacoango Silvia Maritsa",
+    "whatsapp": "593986685581",
+    "Correo": "silvi_marit@hotmail.com",
+    "username": "smcacoango",
+    "password": "SM1723254916",
+    "cedula": "1723254916 "
+  },
+  {
+    "nombres": "Bohórquez Beltrán María Emilia",
+    "whatsapp": "593998844981",
+    "Correo": "maemibb04@gmail.com",
+    "username": "mebohorquez",
+    "password": "ME1723259006",
+    "cedula": "1723259006"
+  },
+  {
+    "nombres": "Félix Iza Ivonne Alexandra",
+    "whatsapp": "593992861476",
+    "Correo": "ivonale1989@yahoo.com",
+    "username": "iafelix",
+    "password": "IA1723357495",
+    "cedula": "1723357495"
+  },
+  {
+    "nombres": "Socasi Quishpe Gabriela ",
+    "whatsapp": "593995984115",
+    "Correo": "gabu152004@hotmail.com",
+    "username": "gsocasi",
+    "password": "G1723505366",
+    "cedula": "1723505366"
+  },
+  {
+    "nombres": "Chavez Amendaño Stefanny Michelle",
+    "whatsapp": "593986725026",
+    "Correo": "stefannymicho@hotmail.com",
+    "username": "smchavez2",
+    "password": "SM1723537708",
+    "cedula": "1723537708"
+  },
+  {
+    "nombres": "Pusda Vinueza Karen Julyssa",
+    "whatsapp": "593992213166",
+    "Correo": "kpusda@lile-ec.com",
+    "username": "kjpusda",
+    "password": "KJ1723584049",
+    "cedula": "1723584049"
+  },
+  {
+    "nombres": "Herrera Lopez Yulieth Alejandra",
+    "whatsapp": "593984913631",
+    "Correo": "yulytahl@gmail.com",
+    "username": "yaherrera",
+    "password": "YA1723799126",
+    "cedula": "1723799126"
+  },
+  {
+    "nombres": "Herrera Cisneros Esteban Bladimir",
+    "whatsapp": "593996518340",
+    "Correo": "proyectos@ekoenergyec.com",
+    "username": "ebherrera",
+    "password": "EB1723873194",
+    "cedula": "1723873194"
+  },
+  {
+    "nombres": "Briones Arteaga Anggie Mariel",
+    "whatsapp": "593984124017",
+    "Correo": "anggiebmariel@gmail.com",
+    "username": "ambriones2",
+    "password": "AM1724124290",
+    "cedula": "1724124290"
+  },
+  {
+    "nombres": "Quiña Montero Sofía Nicole",
+    "whatsapp": "593987314730",
+    "Correo": "sofiaquinam@gmail.com",
+    "username": "snquina",
+    "password": "SN1724186653",
+    "cedula": "1724186653"
+  },
+  {
+    "nombres": "Garcia Moncayo Laura Isabel",
+    "whatsapp": "593982423731",
+    "Correo": "isa.g4312@gmail.com",
+    "username": "ligarcia",
+    "password": "LI1724333776",
+    "cedula": "1724333776"
+  },
+  {
+    "nombres": "Velez Cruz Marilin Alicia",
+    "whatsapp": "593995388887",
+    "Correo": "marilinvelez50@gmail.com",
+    "username": "mavelez5",
+    "password": "MA1724392798",
+    "cedula": "1724392798"
+  },
+  {
+    "nombres": "Puga Costa Evelyn Paulina",
+    "whatsapp": "593998844843",
+    "Correo": "evelyn10032010@gmail.com",
+    "username": "eppuga",
+    "password": "EP1724771967",
+    "cedula": "1724771967"
+  },
+  {
+    "nombres": "Quezada Gaona Sayda Belén",
+    "whatsapp": "593968145385",
+    "Correo": "belennquezada07@gmail.com",
+    "username": "sbquezada1",
+    "password": "SB1724789209",
+    "cedula": "1724789209"
+  },
+  {
+    "nombres": "Prado Uriarte Mayra Elizabeth",
+    "whatsapp": "593979044212",
+    "Correo": "mayeluriarte@gmail.com",
+    "username": "meprado",
+    "password": "ME1724958234",
+    "cedula": "1724958234"
+  },
+  {
+    "nombres": "Rios Guañuna Grace Paola",
+    "whatsapp": "593992543073",
+    "Correo": "gracepao.rios@gmail.com",
+    "username": "gprios",
+    "password": "GP1725431165",
+    "cedula": "1725431165"
+  },
+  {
+    "nombres": "Fernández Arcos Zoila Estefania",
+    "whatsapp": "593979313007",
+    "Correo": "estefania9686@hotmail.com",
+    "username": "zefernandez",
+    "password": "ZE1725569998",
+    "cedula": "1725569998 "
+  },
+  {
+    "nombres": "Arias Cisneros Karla Alejandra",
+    "whatsapp": "593999733746",
+    "Correo": "karla93_alejandra@hotmail.com",
+    "username": "kaarias",
+    "password": "KA1725632986",
+    "cedula": "1725632986"
+  },
+  {
+    "nombres": "Diaz Tandazo Silvia Paola",
+    "whatsapp": "593984545268",
+    "Correo": "diaztandazo04@hotmail.com",
+    "username": "spdiaz2",
+    "password": "SP1725780488",
+    "cedula": "1725780488"
+  },
+  {
+    "nombres": "Lechón Cholca Erika Amparo",
+    "whatsapp": "593981230509",
+    "Correo": "ery_fjr1995@hotmail.com",
+    "username": "ealechon",
+    "password": "EA1726020959",
+    "cedula": "1726020959"
+  },
+  {
+    "nombres": "Carrera Ullco Nathaly Paola",
+    "whatsapp": "593981715777",
+    "Correo": "nathalycarrera016@gmail.com",
+    "username": "npcarrera",
+    "password": "NP1726342429",
+    "cedula": "1726342429"
+  },
+  {
+    "nombres": "Quinapallo Borrero Brenda Yaimar",
+    "whatsapp": "593995135988",
+    "Correo": "licbrendayaimaresequibo@gmail.com",
+    "username": "byquinapallo",
+    "password": "BY1726364712",
+    "cedula": "1726364712"
+  },
+  {
+    "nombres": "Pallo  Benjamin ",
+    "whatsapp": "593963235219",
+    "Correo": "benjaminpallo6@gmail.com",
+    "username": "bpallo",
+    "password": "B1726394545",
+    "cedula": "1726394545"
+  },
+  {
+    "nombres": "Guañuna Tenorio Paola Alejandra",
+    "whatsapp": "593939295030",
+    "Correo": "alejitamayo1999@hotmail.com",
+    "username": "paguanuna",
+    "password": "PA1726905241",
+    "cedula": "1726905241"
+  },
+  {
+    "nombres": "Lombeida Pesantez Karla Estefania",
+    "whatsapp": "593960011280",
+    "Correo": "lombeidapesantezkarlaestefania@gmail.com",
+    "username": "kelombeida",
+    "password": "KE1727110395",
+    "cedula": "1727110395"
+  },
+  {
+    "nombres": "Salazar Salazar Mildreth Nicole",
+    "whatsapp": "593961105932",
+    "Correo": "salazarmil258@gmail.com",
+    "username": "mnsalazar",
+    "password": "MN1727575530",
+    "cedula": "1727575530"
+  },
+  {
+    "nombres": "Menendez Fernandez Lizbeth Anahí",
+    "whatsapp": "593984274296",
+    "Correo": "lizbethmenendez8@gmail.com",
+    "username": "lamenendez",
+    "password": "LA1727668194",
+    "cedula": "1727668194"
+  },
+  {
+    "nombres": "Tarabata  Yadira ",
+    "whatsapp": "593991577652",
+    "Correo": "yatarabata20@gmail.com",
+    "username": "ytarabata",
+    "password": "Y1727723262",
+    "cedula": "1727723262"
+  },
+  {
+    "nombres": "Tocain Toaquiza Camila Alexandra",
+    "whatsapp": "593969015398",
+    "Correo": "camilatocain148@gmail.com",
+    "username": "catocain",
+    "password": "CA1728580554",
+    "cedula": "1728580554"
+  },
+  {
+    "nombres": "Espinoza Culqui Melanie Karolina",
+    "whatsapp": "593984367077",
+    "Correo": "me69009@gmail.com",
+    "username": "mkespinoza",
+    "password": "MK1729121614",
+    "cedula": "1729121614"
+  },
+  {
+    "nombres": "Idrobo Erazo Victoria ",
+    "whatsapp": "593985339051",
+    "Correo": "ana123victoria2022@gmail.com",
+    "username": "vidrobo",
+    "password": "V1729308476",
+    "cedula": "1729308476"
+  },
+  {
+    "nombres": "Villagomez Bardellini Mayly Marina",
+    "whatsapp": "593984182124",
+    "Correo": "maycitavillagomez@gmail.com",
+    "username": "mmvillagomez",
+    "password": "MM1729592319",
+    "cedula": "1729592319"
+  },
+  {
+    "nombres": "Quishpillo Colcha Nancy Maribel",
+    "whatsapp": "593983632373",
+    "Correo": "nancyquispillo23@gmail.com",
+    "username": "nmquishpillo",
+    "password": "NM1750407411",
+    "cedula": "1750407411"
+  },
+  {
+    "nombres": "Tapia  Gabriela ",
+    "whatsapp": "593992633770",
+    "Correo": "gordillo2330@gmail.com",
+    "username": "gtapia3",
+    "password": "G1751001460",
+    "cedula": "1751001460"
+  },
+  {
+    "nombres": "Vasquez  María José",
+    "whatsapp": "593960154989",
+    "Correo": "majito199719@gmail.com",
+    "username": "mjvasquez2",
+    "password": "MJ1751284520",
+    "cedula": "1751284520"
+  },
+  {
+    "nombres": "Escobar Morejon Angelo Mateo",
+    "whatsapp": "593999121201",
+    "Correo": "mateoescobar390@gmail.com",
+    "username": "amescobar1",
+    "password": "AM1751335470",
+    "cedula": "1751335470"
+  },
+  {
+    "nombres": "Pazmiño Mariscal Amy Nicole",
+    "whatsapp": "593963016966",
+    "Correo": "nicoemoxa@hotmail.com",
+    "username": "anpazmino",
+    "password": "AN1751354257",
+    "cedula": "1751354257"
+  },
+  {
+    "nombres": "Curillo Chachalo Kathia Lisseth",
+    "whatsapp": "593989471824",
+    "Correo": "kathialisseth33@gmail.com",
+    "username": "klcurillo",
+    "password": "KL1751464742",
+    "cedula": "1751464742"
+  },
+  {
+    "nombres": "Guailla Guaman Alisson Nicole",
+    "whatsapp": "593983489510",
+    "Correo": "alissonbg192109@gmail.com",
+    "username": "anguailla",
+    "password": "AN1751516848",
+    "cedula": "1751516848 "
+  },
+  {
+    "nombres": "Sandoval  Leslie ",
+    "whatsapp": "593995069455",
+    "Correo": "lesliesandoval_98@hotmail.com",
+    "username": "lsandoval",
+    "password": "L1751584515",
+    "cedula": "1751584515"
+  },
+  {
+    "nombres": "Castillo Mejia David Israel",
+    "whatsapp": "593995272873",
+    "Correo": "mrcrazydavec@gmail.com",
+    "username": "dicastillo1",
+    "password": "DI1751801836",
+    "cedula": "1751801836"
+  },
+  {
+    "nombres": "Castro Aragón Paloma Sarahí",
+    "whatsapp": "593978670471",
+    "Correo": "castropaloma1505@gmail.com",
+    "username": "pscastro",
+    "password": "PS1752086122",
+    "cedula": "1752086122"
+  },
+  {
+    "nombres": "Cuadrado Mendoza Danna Gabriela",
+    "whatsapp": "593989718008",
+    "Correo": "dannacuadrado2005@gmail.com",
+    "username": "dgcuadrado",
+    "password": "DG1752251866",
+    "cedula": "1752251866 "
+  },
+  {
+    "nombres": "Rojas Medina Karen Alejandra",
+    "whatsapp": "593997718287",
+    "Correo": "karenrojas015m@gmail.com",
+    "username": "karojas",
+    "password": "KA1754049557",
+    "cedula": "1754049557"
+  },
+  {
+    "nombres": "Caranqui Vellicela Katerin Jessica",
+    "whatsapp": "593997656108",
+    "Correo": "kjessi2003@gmail.com",
+    "username": "kjcaranqui",
+    "password": "KJ1754492476",
+    "cedula": "1754492476"
+  },
+  {
+    "nombres": "Manchay Josa Jordy Sebastián",
+    "whatsapp": "593968831290",
+    "Correo": "jordymanchay373@gmail.com",
+    "username": "jsmanchay",
+    "password": "JS1754830980",
+    "cedula": "1754830980"
+  },
+  {
+    "nombres": "Cobacango Bautista Margarita Mercedes",
+    "whatsapp": "593967808078",
+    "Correo": "margaritacoba08@gmail.com",
+    "username": "mmcobacango",
+    "password": "MM1755006382",
+    "cedula": "1755006382"
+  },
+  {
+    "nombres": "Zapata Yela Andrea Milena",
+    "whatsapp": "593996477977",
+    "Correo": "milena17zapata@gmail.com",
+    "username": "amzapata1",
+    "password": "AM1755012562",
+    "cedula": "1755012562"
+  },
+  {
+    "nombres": "Oyagata Moran Juan Gabriel",
+    "whatsapp": "593962917367",
+    "Correo": "juanmoran1374@gmail.com",
+    "username": "jgoyagata",
+    "password": "JG1755322771",
+    "cedula": "1755322771"
+  },
+  {
+    "nombres": "Caiza Zambrano Josseli Michell",
+    "whatsapp": "593986595186",
+    "Correo": "caizazambranojosselimichell@gmail.com",
+    "username": "jmcaiza1",
+    "password": "JM1755341607",
+    "cedula": "1755341607"
+  },
+  {
+    "nombres": "Sandoval Bravo Victoria Micaela",
+    "whatsapp": "593992734024",
+    "Correo": "micaelasandovalbravo@gmail.com",
+    "username": "vmsandoval1",
+    "password": "VM1755784269",
+    "cedula": "1755784269"
+  },
+  {
+    "nombres": "Alvarado Osorio Yuleidy Margarita",
+    "whatsapp": "593992844395",
+    "Correo": "ymao79@gmail.com",
+    "username": "ymalvarado",
+    "password": "YM1757658735",
+    "cedula": "1757658735"
+  },
+  {
+    "nombres": "Rodríguez Cortés Sergio Alejandro",
+    "whatsapp": "593998008317",
+    "Correo": "sarc4935@gmail.com",
+    "username": "sarodriguez2",
+    "password": "SA1758902934",
+    "cedula": "1758902934"
+  },
+  {
+    "nombres": "Posada  Eliana ",
+    "whatsapp": "593962664442",
+    "Correo": "eliana.posada@hinodegroup.net",
+    "username": "eposada",
+    "password": "E1759140401",
+    "cedula": "1759140401"
+  },
+  {
+    "nombres": "Valladares Peña Dorys Leonor",
+    "whatsapp": "593983928999",
+    "Correo": "xtranutri@gmail.com",
+    "username": "dlvalladares1",
+    "password": "DL1759511874",
+    "cedula": "1759511874"
+  },
+  {
+    "nombres": "Salazar Requena Oriana Valle",
+    "whatsapp": "593993433457",
+    "Correo": "orijesasr@gmail.com",
+    "username": "ovsalazar",
+    "password": "OV1759541764",
+    "cedula": "1759541764"
+  },
+  {
+    "nombres": "Godoy Pernia Ibsen Argenis",
+    "whatsapp": "593980566843",
+    "Correo": "ibsen.fes2019@gmail.com",
+    "username": "iagodoy",
+    "password": "IA1760762466",
+    "cedula": "1760762466"
+  },
+  {
+    "nombres": "Canelon Pichardo Yoanny Rafaela",
+    "whatsapp": "593985282033",
+    "Correo": "ycanelon@hotmail.com",
+    "username": "yrcanelon",
+    "password": "YR1761525904",
+    "cedula": "1761525904"
+  },
+  {
+    "nombres": "Paredes Aular Mariammer José",
+    "whatsapp": "593992846743",
+    "Correo": "mariammerp@gmail.com",
+    "username": "mjparedes1",
+    "password": "MJ1761561008",
+    "cedula": "1761561008 "
+  },
+  {
+    "nombres": "Campos  Bety ",
+    "whatsapp": "593998010034",
+    "Correo": "beatrice.cv01@gmail.com",
+    "username": "bcampos",
+    "password": "B1801672344",
+    "cedula": "1801672344"
+  },
+  {
+    "nombres": "Sánchez Rivera Rita Niza",
+    "whatsapp": "593987134861",
+    "Correo": "rnsanchezr20@gmail.com",
+    "username": "rnsanchez3",
+    "password": "RN1801949544",
+    "cedula": "1801949544 "
+  },
+  {
+    "nombres": "Puca Salazar Patricia Alejandra",
+    "whatsapp": "593983313103",
+    "Correo": "patriciapuca0@gmail.com",
+    "username": "papuca",
+    "password": "PA1802277143",
+    "cedula": "1802277143"
+  },
+  {
+    "nombres": "Velasco Vasco Myriam Rosario",
+    "whatsapp": "5930989265088",
+    "Correo": "myriamvelasco85@gmail.com",
+    "username": "mrvelasco",
+    "password": "MR1802354447",
+    "cedula": "1802354447"
+  },
+  {
+    "nombres": "Sevilla Arcos Mónica ",
+    "whatsapp": "593996288434",
+    "Correo": "grupoclarza@gmail.com",
+    "username": "msevilla",
+    "password": "M1802531234",
+    "cedula": "1802531234"
+  },
+  {
+    "nombres": "Villacis  Mercedes ",
+    "whatsapp": "593995463383",
+    "Correo": "proyecto.vida.flp@gmail.com",
+    "username": "mvillacis",
+    "password": "M1802603355",
+    "cedula": "1802603355"
+  },
+  {
+    "nombres": "Mejia Zambrano Rocío Pilar",
+    "whatsapp": "593984996221",
+    "Correo": "rosipila@gmail.com",
+    "username": "rdmejia",
+    "password": "RP1802643021",
+    "cedula": "1802643021"
+  },
+  {
+    "nombres": "Maliza Urrutia María Gioconda",
+    "whatsapp": "593998350941",
+    "Correo": "giocondamalizau74@gmail.com",
+    "username": "mgmaliza",
+    "password": "MG1802784502",
+    "cedula": "1802784502"
+  },
+  {
+    "nombres": "Vasconez Valle Yolanda Patricia",
+    "whatsapp": "593998139389",
+    "Correo": "yolandav1976@hotmail.com",
+    "username": "ypvasconez",
+    "password": "YP1802924280",
+    "cedula": "1802924280"
+  },
+  {
+    "nombres": "Medina Martinez Norma  Jacqueline",
+    "whatsapp": "593991854893",
+    "Correo": "normamedina7@outlook.com",
+    "username": "njmedina",
+    "password": "NJ1802933372",
+    "cedula": "1802933372 "
+  },
+  {
+    "nombres": "Veloz  Paulina ",
+    "whatsapp": "5930958720701",
+    "Correo": "pauveloz2013@gmail.com",
+    "username": "pveloz",
+    "password": "P1803108669",
+    "cedula": "1803108669"
+  },
+  {
+    "nombres": "Izurieta Pazmiño Patricia Dayana",
+    "whatsapp": "593995278626",
+    "Correo": "patty_izu@hotmail.com",
+    "username": "pdizurieta",
+    "password": "PD1803268828",
+    "cedula": "1803268828"
+  },
+  {
+    "nombres": "Ortíz Zurita Johanna Gabriela",
+    "whatsapp": "593995515005",
+    "Correo": "johaortiz@msn.com",
+    "username": "jgortiz1",
+    "password": "JG1803447026",
+    "cedula": "1803447026"
+  },
+  {
+    "nombres": "Yansapanta Espin Edisson Geovanny",
+    "whatsapp": "593998399789",
+    "Correo": "eyansapanta@gmail.com",
+    "username": "egyansapanta",
+    "password": "EG1803523727",
+    "cedula": "1803523727"
+  },
+  {
+    "nombres": "Lopez  Jenny ",
+    "whatsapp": "593987368238",
+    "Correo": "jennylumi35@gmail.com",
+    "username": "jlopez1",
+    "password": "J1803742970",
+    "cedula": "1803742970"
+  },
+  {
+    "nombres": "Minchala Analuisa Rosario Amparo",
+    "whatsapp": "593983350912",
+    "Correo": "armamalm@hotmail.com",
+    "username": "raminchala",
+    "password": "RA1803811858",
+    "cedula": "1803811858"
+  },
+  {
+    "nombres": "Orozco  Lorena Alexandra",
+    "whatsapp": "593999217245",
+    "Correo": "negrita_lo16@hotmail.com",
+    "username": "laorozco",
+    "password": "LA1804155255",
+    "cedula": "1804155255"
+  },
+  {
+    "nombres": "Coloma Nuñez Lorena Elizabeth",
+    "whatsapp": "593987925917",
+    "Correo": "jmcc0401@gmail.com",
+    "username": "lecoloma",
+    "password": "LE1804476859",
+    "cedula": "1804476859"
+  },
+  {
+    "nombres": "Zambrano Fernandez Maria Jose",
+    "whatsapp": "593984543503",
+    "Correo": "majozamfer@gmail.com",
+    "username": "mjzambrano4",
+    "password": "MJ1804500179",
+    "cedula": "1804500179"
+  },
+  {
+    "nombres": "Guerrón Villacís Daniel Leonardo",
+    "whatsapp": "593998054459",
+    "Correo": "Danoleito@gmail.com",
+    "username": "dlguerron",
+    "password": "DL1804507505",
+    "cedula": "1804507505"
+  },
+  {
+    "nombres": "Bonifás Toapanta Mónica Sofía",
+    "whatsapp": "593987050331",
+    "Correo": "sofy_bony@yahoo.com",
+    "username": "msbonifas",
+    "password": "MS1804620712",
+    "cedula": "1804620712"
+  },
+  {
+    "nombres": "Miranda Moreta Jennifer Lorena",
+    "whatsapp": "593997180592",
+    "Correo": "mirandajennifer@hotmail.com",
+    "username": "jlmiranda1",
+    "password": "JL1804896874",
+    "cedula": "1804896874"
+  },
+  {
+    "nombres": "Solis Acosta María Fernanda",
+    "whatsapp": "593983594938",
+    "Correo": "fersol.solis@gmail.com",
+    "username": "mfsolis1",
+    "password": "MF1804903621",
+    "cedula": "1804903621"
+  },
+  {
+    "nombres": "Aucapiña Cando Cynthia Aracelly",
+    "whatsapp": "593985430226",
+    "Correo": "cynthiaaracelly30@gmail.com",
+    "username": "caaucapina",
+    "password": "CA1805043864",
+    "cedula": "1805043864"
+  },
+  {
+    "nombres": "Villacís Fernández Pablo ",
+    "whatsapp": "593998129456",
+    "Correo": "pavife_08@hotmail.com",
+    "username": "pvillacis",
+    "password": "P1805068788",
+    "cedula": "1805068788"
+  },
+  {
+    "nombres": "Toainga Andachi Gladys Marisol",
+    "whatsapp": "593993765561",
+    "Correo": "gladysto27@gmail.com",
+    "username": "gmtoainga",
+    "password": "GM1805221148",
+    "cedula": "1805221148"
+  },
+  {
+    "nombres": "Padilla  Bryan ",
+    "whatsapp": "593998817000",
+    "Correo": "bryanpadilla291@gmail.com",
+    "username": "bapadilla",
+    "password": "BA1805271739",
+    "cedula": "1805271739"
+  },
+  {
+    "nombres": "Sacón Quinatoa Anahí Aracelly",
+    "whatsapp": "593993314983",
+    "Correo": "anahiquinatoa680@gmail.com",
+    "username": "aasacon",
+    "password": "AA1850220680",
+    "cedula": "1850220680"
+  },
+  {
+    "nombres": "Ortiz Guayanay Diana Jaquelin",
+    "whatsapp": "593987436792",
+    "Correo": "dortiz1982ga@gmail.com",
+    "username": "djortiz2",
+    "password": "DJ1900457548",
+    "cedula": "1900457548 "
+  },
+  {
+    "nombres": "Castillo Obando Kerly Alexandra",
+    "whatsapp": "593969209733",
+    "Correo": "Kerlycast04@gmail.com",
+    "username": "kacastillo2",
+    "password": "KA1900655661",
+    "cedula": "1900655661"
+  },
+  {
+    "nombres": "González Vega Kelly Anahí",
+    "whatsapp": "593988344420",
+    "Correo": "gonzalezkelly2008@gmail.com",
+    "username": "kagonzalez",
+    "password": "KA1950185106",
+    "cedula": "1950185106"
+  },
+  {
+    "nombres": "Miranda Oregón Gabriela Enedina",
+    "whatsapp": "51998560314",
+    "Correo": "gaby1802@hotmail.com",
+    "username": "gemiranda",
+    "password": "GE20111307",
+    "cedula": "20111307"
+  },
+  {
+    "nombres": "Ron  Janeth ",
+    "whatsapp": "593999314155",
+    "Correo": "ronjaneth6@gmail.com",
+    "username": "jron",
+    "password": "J2100110564",
+    "cedula": "2100110564"
+  },
+  {
+    "nombres": "Heredia Rodríguez Daysi Patricia",
+    "whatsapp": "593980682280",
+    "Correo": "patty-heredia@hotmail.com",
+    "username": "dpheredia",
+    "password": "DP2100341987",
+    "cedula": "2100341987"
+  },
+  {
+    "nombres": "Mieles Guerrero Gloria Esther",
+    "whatsapp": "593988033074",
+    "Correo": "yoyiguerrero1984@gmail.com",
+    "username": "gemieles1",
+    "password": "GE2100429733",
+    "cedula": "2100429733"
+  },
+  {
+    "nombres": "Velásquez Jumbo Lourdes Margarita",
+    "whatsapp": "593998164007",
+    "Correo": "lourdesv95@hotmail.com",
+    "username": "lmvelasquez",
+    "password": "LM2100736319",
+    "cedula": "2100736319"
+  },
+  {
+    "nombres": "Riera Guzmán Irma Margoth",
+    "whatsapp": "593987274631",
+    "Correo": "rierairma5@gmail.com",
+    "username": "imriera1",
+    "password": "IM2100860747",
+    "cedula": "2100860747"
+  },
+  {
+    "nombres": "Maila Chango  Katty Stefania",
+    "whatsapp": "593967753201",
+    "Correo": "mailakatty96@gmail.com",
+    "username": "ksmailachango",
+    "password": "KS2100868757",
+    "cedula": "2100868757"
+  },
+  {
+    "nombres": "Velasquez Jumbo Fanny Paola",
+    "whatsapp": "593992030477",
+    "Correo": "paolafanny12@gmail.com",
+    "username": "fpvelasquez",
+    "password": "FP2100930284",
+    "cedula": "2100930284"
+  },
+  {
+    "nombres": "Herrera Cedeño Jessica July",
+    "whatsapp": "593989338067",
+    "Correo": "jessicaherreraec@gmail.com",
+    "username": "jjherrera1",
+    "password": "JJ2100993001",
+    "cedula": "2100993001"
+  },
+  {
+    "nombres": "Tunki  Mercy ",
+    "whatsapp": "593980141963",
+    "Correo": "criss_liss@hotmail.es",
+    "username": "mtunki",
+    "password": "M2101121479",
+    "cedula": "2101121479"
+  },
+  {
+    "nombres": "Peña Giraldo Nayeli Nathalia",
+    "whatsapp": "593988001426",
+    "Correo": "naygiraldo1@gmail.com",
+    "username": "nnpena",
+    "password": "NN2150248702",
+    "cedula": "2150248702"
+  },
+  {
+    "nombres": "Chimborazo Calva Sandra Yessenia",
+    "whatsapp": "593968439667",
+    "Correo": "jesseniachimborazo157@gmail.com",
+    "username": "sychimborazo",
+    "password": "SY2200336499",
+    "cedula": "2200336499"
+  },
+  {
+    "nombres": "Macias Calderón Jhomar Elizabeth",
+    "whatsapp": "593982063530",
+    "Correo": "jhomarmacias1996@gmail.com",
+    "username": "jemacias1",
+    "password": "JE2200349427",
+    "cedula": "2200349427"
+  },
+  {
+    "nombres": "Calvachi Cobos Elizabeth Nelly",
+    "whatsapp": "593985251855",
+    "Correo": "calvachielizabeth208@gmail.com",
+    "username": "encalvachi",
+    "password": "EN2200550172",
+    "cedula": "2200550172"
+  },
+  {
+    "nombres": "Buste Ampuero Galindo Miguel",
+    "whatsapp": "593958853437",
+    "Correo": "miguelgm2222@hotmail.com",
+    "username": "gmbuste",
+    "password": "GM2350461162",
+    "cedula": "2350461162"
+  },
+  {
+    "nombres": "Paredes Ruiz Erika Lisbeth",
+    "whatsapp": "593959561915",
+    "Correo": "elpr2350540536@gmail.com",
+    "username": "elparedes",
+    "password": "EL2350540536",
+    "cedula": "2350540536"
+  },
+  {
+    "nombres": "Ayala Burgos Pamela ",
+    "whatsapp": "593990285095",
+    "Correo": "ea05431@gmail.com",
+    "username": "payala",
+    "password": "P2351039751",
+    "cedula": "2351039751"
+  },
+  {
+    "nombres": "Mellado  Rocio ",
+    "whatsapp": "51992812550",
+    "Correo": "rocimell@gmail.com",
+    "username": "rmellado",
+    "password": "lLTuunrr47",
+    "cedula": "23984675"
+  },
+  {
+    "nombres": "Pozo Ortega Lady Vanessa",
+    "whatsapp": "593967748919",
+    "Correo": "vanepozo37@gmail.com",
+    "username": "lvpozo",
+    "password": "LV2450303520",
+    "cedula": "2450303520"
+  },
+  {
+    "nombres": "Galarza Palma Gilson Efrain",
+    "whatsapp": "593992669380",
+    "Correo": "gilson2414@hotmail.com",
+    "username": "gegalarza",
+    "password": "GE2450440728",
+    "cedula": "2450440728"
+  },
+  {
+    "nombres": "Bornas  Lali Bornas",
+    "whatsapp": "51984689800",
+    "Correo": "direccionwalzenhausen@gmail.com",
+    "username": "lbbornas",
+    "password": "LB25001862",
+    "cedula": "25001862"
+  },
+  {
+    "nombres": "Valderrama Cruz Rosa Mercedes",
+    "whatsapp": "51999154986",
+    "Correo": "primaveraiii@gmail.com",
+    "username": "rmvalderrama",
+    "password": "RM25639558",
+    "cedula": "25639558"
+  },
+  {
+    "nombres": "Miyan Guerrero Katherine Carmen",
+    "whatsapp": "56982116176",
+    "Correo": "katybienestar20@gmail.com",
+    "username": "kcmiyan",
+    "password": "KC276983075",
+    "cedula": "276983075"
+  },
+  {
+    "nombres": "Llanos Morales Jessica Paola",
+    "whatsapp": "51989583913",
+    "Correo": "jessicallanos@hotmail.com",
+    "username": "jpllanos",
+    "password": "JP29631845",
+    "cedula": "29631845"
+  },
+  {
+    "nombres": "Nuñez Tejada Gloria María",
+    "whatsapp": "51992145450",
+    "Correo": "glorianunezt@hotmail.com",
+    "username": "gmnunez",
+    "password": "GM29639151",
+    "cedula": "29639151"
+  },
+  {
+    "nombres": "Tejada Lupa Andrea Rosmeri",
+    "whatsapp": "51989168704",
+    "Correo": "andreusrtl5@hotmail.com",
+    "username": "artejada",
+    "password": "AR29694345",
+    "cedula": "29694345"
+  },
+  {
+    "nombres": "Foronda  Lourdes ",
+    "whatsapp": "51997542857",
+    "Correo": "lomiforever928@gmail.com",
+    "username": "lforonda",
+    "password": "O7se4Q68hf",
+    "cedula": "31625061"
+  },
+  {
+    "nombres": "Espinoza Martin Percy Ramón",
+    "whatsapp": "51976715025",
+    "Correo": "percyespinoza03@gmail.com",
+    "username": "prespinoza",
+    "password": "PR31672016",
+    "cedula": "31672016"
+  },
+  {
+    "nombres": "Fernandez Zevallos Pilar ",
+    "whatsapp": "51945121188",
+    "Correo": "pily13699@gmail.com",
+    "username": "pfernandez",
+    "password": "338SE7UcBN",
+    "cedula": "40056865"
+  },
+  {
+    "nombres": "Alarcon Araujo Lourdes Rosario",
+    "whatsapp": "51957286796",
+    "Correo": "lualarconaraujo0401@gmail.com",
+    "username": "lralarcon",
+    "password": "LR40127708",
+    "cedula": "40127708"
+  },
+  {
+    "nombres": "Perez Hilario Diana Noemí",
+    "whatsapp": "51948453543",
+    "Correo": "dayana_0903@hotmail.com",
+    "username": "dnperez1",
+    "password": "DN40150128",
+    "cedula": "40150128"
+  },
+  {
+    "nombres": "De Quintana Alejandra ",
+    "whatsapp": "51981192385",
+    "Correo": "aledelaq@hotmail.com",
+    "username": "ade",
+    "password": "82BFKbIkPU",
+    "cedula": "40205465"
+  },
+  {
+    "nombres": "Sanchez Gonzales Cecilia Carmen",
+    "whatsapp": "51975074847",
+    "Correo": "ccsg13@hotmail.com",
+    "username": "ccsanchez1",
+    "password": "CC40224180",
+    "cedula": "40224180"
+  },
+  {
+    "nombres": "Zavala  Cynthia ",
+    "whatsapp": "51993513016",
+    "Correo": "cynthia.zavala@me.com",
+    "username": "czavala",
+    "password": "XT2N5eqJEC",
+    "cedula": "40228545"
+  },
+  {
+    "nombres": "Salas Mengoa Yamila ",
+    "whatsapp": "51971415332",
+    "Correo": "aceiteyamila@gmail.com",
+    "username": "ysalas",
+    "password": "8AaEQrjUpb",
+    "cedula": "40429534"
+  },
+  {
+    "nombres": "Maycock  Carla ",
+    "whatsapp": "51996513973",
+    "Correo": "carlamaycock79@gmail.com",
+    "username": "cmaycock",
+    "password": "jyBgFOe7bw",
+    "cedula": "40452756"
+  },
+  {
+    "nombres": "Medina Calla Ana Maria",
+    "whatsapp": "51958974311",
+    "Correo": "anammedina@gmail.com",
+    "username": "ammedina",
+    "password": "AM40527671",
+    "cedula": "40527671"
+  },
+  {
+    "nombres": "Díaz Silva Lourdes Pilar",
+    "whatsapp": "51968310963",
+    "Correo": "lulitads2@gmail.com",
+    "username": "lpdiaz",
+    "password": "LP40573361",
+    "cedula": "40573361"
+  },
+  {
+    "nombres": "Gerónimo Cuba Guicela ",
+    "whatsapp": "51987531878",
+    "Correo": "guicela75@gmail.com",
+    "username": "ggeronimo",
+    "password": "S6I75qL5wA",
+    "cedula": "40765968"
+  },
+  {
+    "nombres": "Cuevas Castro Ingrid NalÃ¹",
+    "whatsapp": "51932652860",
+    "Correo": "estrellita_184cc@hotmail.com",
+    "username": "incuevas",
+    "password": "IN40831440",
+    "cedula": "40831440"
+  },
+  {
+    "nombres": "Canchaya Castillo Rocío Milagros",
+    "whatsapp": "51944400375",
+    "Correo": "rociocanchaya1904@gmail.com",
+    "username": "rmcanchaya",
+    "password": "RM40865783",
+    "cedula": "40865783"
+  },
+  {
+    "nombres": "Espinoza  Elena ",
+    "whatsapp": "51986081658",
+    "Correo": "elenaceciliaespinozasilva@gmail.com",
+    "username": "eespinoza",
+    "password": "K6JHQygQHm",
+    "cedula": "40961270"
+  },
+  {
+    "nombres": "Tello Villegas Roberto Ernesto",
+    "whatsapp": "51934488027",
+    "Correo": "telloycontadores@gmail.com",
+    "username": "retello",
+    "password": "RE41014882",
+    "cedula": "41014882"
+  },
+  {
+    "nombres": "Viñas Villa Valerie ",
+    "whatsapp": "51995168444",
+    "Correo": "art3v@hotmail.com",
+    "username": "vvinas",
+    "password": "18l0FeEgka",
+    "cedula": "41232372"
+  },
+  {
+    "nombres": "Columbus  Verenisse ",
+    "whatsapp": "51977425014",
+    "Correo": "verenisse.columbus@hotmail.com",
+    "username": "vcolumbus",
+    "password": "0nCds4lfSY",
+    "cedula": "41316967"
+  },
+  {
+    "nombres": "Caricchio Tanchiva María Pilar",
+    "whatsapp": "51908667510",
+    "Correo": "maripilifyf@gmail.com",
+    "username": "mpcaricchio",
+    "password": "MP41410893",
+    "cedula": "41410893"
+  },
+  {
+    "nombres": "Flores Castillo Magaly ",
+    "whatsapp": "51969823390",
+    "Correo": "lee10eunnim@gmail.com",
+    "username": "mflores2",
+    "password": "27yq190RhQ",
+    "cedula": "41412690"
+  },
+  {
+    "nombres": "Zevallos Condor Rocio Pilar",
+    "whatsapp": "51989514995",
+    "Correo": "rociozevallosmiscelanea@gmail.com",
+    "username": "rpzevallos",
+    "password": "RP42756132",
+    "cedula": "42756132"
+  },
+  {
+    "nombres": "Ticona Machac Anali Jessica",
+    "whatsapp": "51941241991",
+    "Correo": "laynna23@hotmail.com",
+    "username": "ajticona",
+    "password": "AJ42832950",
+    "cedula": "42832950"
+  },
+  {
+    "nombres": "Huamán Danós Ketty Naomi",
+    "whatsapp": "51988832822",
+    "Correo": "knaomi.knhd@gmail.com",
+    "username": "knhuaman",
+    "password": "KN42884349",
+    "cedula": "42884349"
+  },
+  {
+    "nombres": "Reátegui Torres Iriety Asunción",
+    "whatsapp": "51996344534",
+    "Correo": "iriety@hotmail.com",
+    "username": "iareategui",
+    "password": "IA43130999",
+    "cedula": "43130999"
+  },
+  {
+    "nombres": "Córdova Murga Lizsl Yackeline",
+    "whatsapp": "51987986905",
+    "Correo": "lizslcordovam@gmail.com",
+    "username": "lycordova",
+    "password": "LY43256902",
+    "cedula": "43256902"
+  },
+  {
+    "nombres": "Rosales Diaz Mahida Talia",
+    "whatsapp": "51986105187",
+    "Correo": "Mahida.rosales@hotmail.com",
+    "username": "mtrosales",
+    "password": "MT43395486",
+    "cedula": "43395486"
+  },
+  {
+    "nombres": "Plaza Battistini Santiago Benjamin",
+    "whatsapp": "51993653781",
+    "Correo": "splaza@nextplacement.net",
+    "username": "sbplaza",
+    "password": "SB43469610",
+    "cedula": "43469610"
+  },
+  {
+    "nombres": "Teque Vera Magali ",
+    "whatsapp": "51934657442",
+    "Correo": "magaliteque@gmail.com",
+    "username": "mteque",
+    "password": "D9MIexB7M4",
+    "cedula": "43641221"
+  },
+  {
+    "nombres": "Guardia Ortiz Cintya Pamela",
+    "whatsapp": "51959284010",
+    "Correo": "cintya.guardia@hotmail.com",
+    "username": "cpguardia",
+    "password": "CP44157326",
+    "cedula": "44157326"
+  },
+  {
+    "nombres": "Mercado Mercado Angelica ",
+    "whatsapp": "51961808019",
+    "Correo": "angelik.mercado.m@gmail.com",
+    "username": "amercado",
+    "password": "JMpHp4e7Xr",
+    "cedula": "45474241"
+  },
+  {
+    "nombres": "Negrón Reyes Vanessa ",
+    "whatsapp": "51962338040",
+    "Correo": "vanessa.negron.r@gmail.com",
+    "username": "vnegron",
+    "password": "0F2nNfer4O",
+    "cedula": "46270490"
+  },
+  {
+    "nombres": "Condemarin Montes Rossana Carmen",
+    "whatsapp": "51928664962",
+    "Correo": "rcondemarin@foreverperu.com",
+    "username": "rccondemarin",
+    "password": "RC46564719",
+    "cedula": "46564719"
+  },
+  {
+    "nombres": "Zevallos Apolimar Milagros Betsaida",
+    "whatsapp": "51935481820",
+    "Correo": "documentosdebetza@gmail.com",
+    "username": "mbzevallos",
+    "password": "MB48137217",
+    "cedula": "48137217"
+  },
+  {
+    "nombres": "Rivas Grandez Sally Katherine",
+    "whatsapp": "51975717464",
+    "Correo": "constructoracrosetti@gmail.com",
+    "username": "skrivas",
+    "password": "SK71228278",
+    "cedula": "71228278"
+  },
+  {
+    "nombres": "Rueda Vásquez Noelia ",
+    "whatsapp": "51925134696",
+    "Correo": "noerueva@gmail.com",
+    "username": "nrueda",
+    "password": "Z0zHb8bmn5",
+    "cedula": "73010797"
+  },
+  {
+    "nombres": "Cutipa Jimenez Nayda Yanina",
+    "whatsapp": "51928922100",
+    "Correo": "jnayda03@gmail.com",
+    "username": "nycutipa",
+    "password": "NY73701475",
+    "cedula": "73701475"
+  },
+  {
+    "nombres": "Yaulimango Román Jeancarlo Sthivens",
+    "whatsapp": "51986721170",
+    "Correo": "jeanyauli@gmail.com",
+    "username": "jsyaulimango",
+    "password": "JS73701486",
+    "cedula": "73701486"
+  }
+];
+
+        function buscarCredenciales() {
+            const cedulaInput = document.getElementById('cedulaInput').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            const resultadoSeccion = document.getElementById('resultadoSeccion');
+
+            // Limpiar estados previos
+            errorMsg.classList.add('hidden');
+            resultadoSeccion.classList.add('hidden');
+
+            if (cedulaInput === "") {
+                errorMsg.innerText = "Por favor, ingrese un número de cédula.";
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+
+            // Buscar coincidencia utilizando la propiedad exacta "cedula"
+            const registro = dataExcel.find(item => item.cedula === cedulaInput);
+
+            if (registro) {
+                // Insertar los textos dinámicamente en las etiquetas de la página
+                document.getElementById('studentName').innerText = registro.nombres;
+                document.getElementById('studentUser').innerText = registro.username;
+                document.getElementById('studentPass').innerText = registro.password;
+                
+                // Mostrar la tarjeta de resultados y el bloque de talleres
+                resultadoSeccion.classList.remove('hidden');
+            } else {
+                errorMsg.innerText = "No se encontró ningún registro coincidente con la cédula ingresada. Verifique e intente nuevamente.";
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        // Permitir la consulta inmediata al presionar la tecla Enter
+        document.getElementById('cedulaInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                buscarCredenciales();
+            }
+        });
+    </script>
+</body>
+</html>
